@@ -1,0 +1,52 @@
+<html>
+    <head>
+        <title>test Observer</title>
+        <script src="debug.js"></script>
+        <script src="observer.js"></script>
+        <script>
+            window.onload = onLoad;
+            g = {};  // all global variables go in here
+
+            function onLoad() {
+	            g.debug = new Debug(true);
+                g.debug.alert("loading");
+            
+                // create three Observers
+                g.observer1 = new Observer();
+                g.observer2 = new Observer();
+                g.observer3 = new Observer();
+                
+                g.observer1.subscribe( "onClickOne", onClickOne);
+                g.observer2.subscribe( "onClickTwo", onClickTwo);
+                g.observer3.subscribe( "onClickThree", onClickThree);
+                
+                g.myobject = new MyObject(g.observer1);
+            }
+            function onClickOne(evt, p3, p4) {
+                g.debug.alert(["button one clicked", evt, p3, p4]);
+            }
+            function onClickTwo(evt, p3, p4) {
+                g.debug.alert(["button two clicked", evt, p3, p4]);
+            }
+            function onClickThree(evt, p3, p4) {
+                g.debug.alert(["button three clicked", evt, p3, p4]);
+            }
+            
+            function MyObject(observer) {
+            	var self = this;
+                observer.subscribe( "onClickOne", self.click1);
+            }
+            MyObject.prototype = {
+                click1 : function(evt, p1, p2) {
+                    g.debug.alert(["myObject.click1 clicked", evt, p1, p2]);
+                }
+            }
+        </script>
+    </head>
+
+<body>
+    <input type="button" value="Button 1" onclick='g.observer1.publish("onClickOne", "self", [2,"hot",42])' />
+    <input type="button" value="Button 2" onclick='g.observer2.publish("onClickTwo", "self")' />
+    <input type="button" value="Button 3" onclick='g.observer3.publish("onClickThree", "self", ["xxx"])' />
+</body>
+</html>
