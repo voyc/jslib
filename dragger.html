@@ -2,6 +2,8 @@
 	<head>
 	<title>Dragger Test</title>
 	<style>
+		.dragging {position:absolute;}
+		.highlight {border:1px solid red}
 		#redsquare {
 			position:absolute; 
 			top:50px; 
@@ -60,6 +62,7 @@
 		}
 	</style>
 	<script src="dragger.js" type="text/javascript"></script>
+	<script src="utils.js" type="text/javascript"></script>
 	<script>
 		window.onload = function() {
 			dragger = new Dragger();
@@ -102,6 +105,7 @@
 
 			var elems = document.getElementsByTagName('cd');
 			for (var i=0; i<elems.length; i++) {
+				elems[i].setAttribute('drag', 'drag');
 				dragger.enableDrag(elems[i]);
 				dragger.addListener( elems[i], 'grab', function(e,x,y) {
 					e.classList.add('dragging');
@@ -123,11 +127,11 @@
 	</head>
 
 	<body>
-		<div id='content'>hello</div>
-		<div id='redsquare'></div>
-		<div id='bluesquare'></div>
-		<div id='yellowsquare'></div>
-		<div id='internals'></div>
+		<div drag id='content'>hello</div>
+		<div drag id='redsquare'></div>
+		<div drag id='bluesquare'></div>
+		<div drag id='yellowsquare'></div>
+		<div drag id='internals'></div>
 
 		<div id='stacks'>
 			<div class='stack' id='untried' ></div>

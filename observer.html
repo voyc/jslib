@@ -1,52 +1,66 @@
 <html>
-    <head>
-        <title>test Observer</title>
-        <script src="debug.js"></script>
-        <script src="observer.js"></script>
-        <script>
-            window.onload = onLoad;
-            g = {};  // all global variables go in here
+	<head>
+		<title>Observer Test</title>
+		<script src="observer.js"></script>
+		<script src="note.js"></script>
+		<script>
+			window.onload = onLoad;
+			g = {};  // all global variables go in here
 
-            function onLoad() {
-	            g.debug = new Debug(true);
-                g.debug.alert("loading");
-            
-                // create three Observers
-                g.observer1 = new Observer();
-                g.observer2 = new Observer();
-                g.observer3 = new Observer();
-                
-                g.observer1.subscribe( "onClickOne", onClickOne);
-                g.observer2.subscribe( "onClickTwo", onClickTwo);
-                g.observer3.subscribe( "onClickThree", onClickThree);
-                
-                g.myobject = new MyObject(g.observer1);
-            }
-            function onClickOne(evt, p3, p4) {
-                g.debug.alert(["button one clicked", evt, p3, p4]);
-            }
-            function onClickTwo(evt, p3, p4) {
-                g.debug.alert(["button two clicked", evt, p3, p4]);
-            }
-            function onClickThree(evt, p3, p4) {
-                g.debug.alert(["button three clicked", evt, p3, p4]);
-            }
-            
-            function MyObject(observer) {
-            	var self = this;
-                observer.subscribe( "onClickOne", self.click1);
-            }
-            MyObject.prototype = {
-                click1 : function(evt, p1, p2) {
-                    g.debug.alert(["myObject.click1 clicked", evt, p1, p2]);
-                }
-            }
-        </script>
-    </head>
+			function onLoad() {
+				console.log("loading");
+
+				// Create three Observers, for testing only.  Normally each app uses only one Observer.
+				g.observer1 = new Observer();
+				g.observer2 = new Observer();
+				g.observer3 = new Observer();
+
+				g.observer1.subscribe( "onClickOne", 'tester', onClickOne);
+				g.observer2.subscribe( "onClickTwo", 'tester', onClickTwo);
+				g.observer3.subscribe( "onClickThree", 'tester', onClickThree);
+
+				g.myobject = new MyObject(g.observer1);  // second subscribe to btn 1
+
+				document.getElementById('btn1').addEventListener('click', function(evt) {
+					g.observer1.publish(new Note("onClickOne", "self", {x:'homer', y:'jethro'}));
+				}, false);
+				document.getElementById('btn2').addEventListener('click', function(evt) {
+					g.observer2.publish(new Note("onClickTwo", "self", {data:'xxxx'}));
+				}, false);
+				document.getElementById('btn3').addEventListener('click', function(evt) {
+					g.observer3.publish(new Note("onClickThree", "self", {a:1,b:2}));
+				}, false);
+			}
+
+			function onClickOne(note) {
+				alert(['in onClickOne', note.payload.x, note.payload.y]);
+			}
+			function onClickTwo(note) {
+				alert(['in onClickTwo', note.payload.data]);
+			}
+			function onClickThree(note) {
+				alert(['in onClickThree', note.payload.a, note.payload.b]);
+			}
+		</script>
+
+		<script>
+			/* class MyObject */
+			function MyObject(observer) {
+				var self = this;
+				observer.subscribe( "onClickOne", 'MyObject', self.click1);
+			}
+			MyObject.prototype = {
+				click1 : function(note) {
+					alert(['in myObject.click1', note.payload.x, note.payload.y]);
+				}
+			}
+		</script>
+	</head>
 
 <body>
-    <input type="button" value="Button 1" onclick='g.observer1.publish("onClickOne", "self", [2,"hot",42])' />
-    <input type="button" value="Button 2" onclick='g.observer2.publish("onClickTwo", "self")' />
-    <input type="button" value="Button 3" onclick='g.observer3.publish("onClickThree", "self", ["xxx"])' />
+	<h1>observer Test</h1>
+	<input type="button" value="Button 1" id='btn1'/>
+	<input type="button" value="Button 2" id='btn2'/>
+	<input type="button" value="Button 3" id='btn3'/>
 </body>
 </html>

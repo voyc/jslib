@@ -6,6 +6,7 @@
 	Expects two classes
 		.dragging {position:absolute;} - style the object as it is being dragged
 		.highlight {border:1px solid red} - style the drop target as it is hovered
+	Requires jslib/utils.js
 */
 Dragger = function() {
 	// make sure only one object is created
