@@ -3,11 +3,12 @@
 	creates one Xhr object for each server request.
 	one public method: comm.request()
 **/
-Comm = function(baseUrl,name, retries) {
+Comm = function(baseUrl, name, retries, consolidated) {
 	this.baseUrl = baseUrl;
 	this.name = name || '';
 	this.seq = 1;
 	this.maxretries = retries || 3;
+	this.consolidated = consolidated || false;  // if true, svcname is passed as post parameter
 }
 
 Comm.prototype = {
@@ -31,6 +32,7 @@ Comm.prototype = {
 		xhr.callback = callback;
 		xhr.seq = this.seq++;
 		xhr.maxretries = this.maxretries;
+		xhr.consolidated = this.consolidated;
 		xhr.callServer();
 	}
 }
@@ -53,6 +55,7 @@ Xhr = function() {
 	this.end = 0;
 	this.elapsed = 0;
 	this.ok = true;
+	this.consolidated = false;
 }
 
 Xhr.prototype = {
@@ -67,6 +70,12 @@ Xhr.prototype = {
 		this.req.onreadystatechange = function() { self._callback() };
 
 		var url = this.base + this.svc;
+		var data = this.data;
+		if (this.consolidated) {
+			url = this.base;
+			data['svc'] = this.svc;
+		}
+
 		this.req.open(this.method, url, true);
 
 		this.req.onabort = function() {
@@ -91,7 +100,7 @@ Xhr.prototype = {
 		// 2. http_build_query() converts this object to a string of key/value pairs
 		// 3. XmlHttpRequest posts this string
 		// 4. php parses this string into $_POST via parse_str()
-		var strdata = http_build_query(this.data);
+		var strdata = http_build_query(data);
 		this.req.send(strdata);
 		console.log(this.log('request ' + this.svc + ' sent'));
 	},
