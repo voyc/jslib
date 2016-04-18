@@ -188,3 +188,13 @@ toggleAttribute = function(elem, attr, value, boo) {
 		elem.removeAttribute(attr);
 	}
 }
+
+findParentWithTag = function(elem, tag) {
+	var parent = null;
+	for ( var e=elem; e && e !== document; e = e.parentNode ) {
+		if (e.tagName.toLowerCase() == tag.toLowerCase()) {
+			parent = e;
+		}
+	}
+	return parent;
+}
