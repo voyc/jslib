@@ -1,0 +1,98 @@
+<html>
+<head>
+	<meta http-equiv='content-type' content='text/html; charset=UTF-8'/>
+	<title>sketch</title>
+	<meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1'>
+	<meta equiv='X-UA-Compatible' content='IE=8'> <!-- for ie8 drag-n-drop bug -->
+
+	<style>
+		#d1 {
+			height:3rem;
+			width:3rem;
+			color:blue;
+			border:1px solid black;
+			margin-bottom:2rem;
+		}
+		#d2 {
+			height:5rem;
+			width:20rem;
+			color:blue;
+			border:1px solid black;
+			margin-bottom:2rem;
+		}
+		#d3 {
+			height:10rem;
+			width:30rem;
+			color:blue;
+			border:1px solid black;
+			margin-bottom:2rem;
+		}
+		#content {
+			position:fixed;
+			font-size:6rem;
+			color:navy;
+			text-align:center;
+			width:inherit;
+			height:inherit;
+		}
+		#canvas {
+			position:fixed;
+			color:orange;
+			text-align:center;
+			width:inherit;
+			height:inherit;
+		}
+		.fixed {
+			position:fixed;
+		}
+		[hidden] {
+			display:none;
+		}
+	</style>
+
+	<script src='sketch.js'></script>
+
+	<script>
+		var sketch1 = null;
+		var sketch2 = null;
+		var sketch3 = null;
+
+		onload = function() {
+			sketch1 = new Sketch(document.getElementById('d1'));
+			sketch1.draw();
+
+			sketch2 = new Sketch(document.getElementById('d2'));
+			sketch2.draw();
+
+			sketch3 = new Sketch(document.getElementById('canvas'));
+			sketch3.setOptions({
+				penColor:'fuchsia',
+				hasGrid:true,
+				gridColor:'black',
+			});
+			sketch3.draw();
+
+			document.getElementById('clear-btn').addEventListener('click', function() {sketch1.clear()}, false);
+			document.getElementById('clear-btn').addEventListener('click', function() {sketch2.clear()}, false);
+			document.getElementById('clear-btn').addEventListener('click', function() {
+				sketch3.clear();
+				document.getElementById('content').setAttribute('hidden', '');
+			}, false);
+
+			document.getElementById('show-btn').addEventListener('click', function() {
+				document.getElementById('content').removeAttribute('hidden', '');
+			}, false);
+		}
+	</script>
+</head>
+<body>
+	<canvas id="d1"></canvas>
+	<canvas id="d2"></canvas>
+	<div id="d3">
+		<div hidden id='content'>ॐ</div>
+		<canvas id='canvas'></canvas>
+	</div>
+	<input type='button' id='show-btn' value='show'/>
+	<input type='button' id='clear-btn' value='clear'/>
+</body>
+</html>
