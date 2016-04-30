@@ -1,6 +1,8 @@
-
-// http://www.html5rocks.com/en/tutorials/webaudio/intro/
-
+/**
+	class Sound
+	@constructor
+	http://www.html5rocks.com/en/tutorials/webaudio/intro/
+*/
 function Sound(context) {
 	this.context = context;  // AudioContext
 	this.bufferList = {};

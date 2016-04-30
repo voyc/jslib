@@ -1,5 +1,6 @@
-﻿/*
-	Note, as in Notification.
+﻿/**
+	class Note, as in Notification.
+	@constructor
 	A Note is passed from publisher to subscribers 
 	by the Observer.
 */

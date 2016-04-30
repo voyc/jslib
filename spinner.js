@@ -1,4 +1,9 @@
-﻿function Spinner(elem) {
+﻿/**
+	class Spinner
+	@constructor
+	Draw a spinning progress indicator.
+*/
+function Spinner(elem) {
 	this.elem = elem;
 	this.canvas = document.createElement('canvas');
 	this.elem.appendChild(this.canvas);
@@ -10,16 +15,16 @@
 	this.colorTriangle = this.color;
 
 	// calculated to fill containing canvas	
-	this.radius;
-	this.arrowStrength;
-	this.triangleSide;  
-	this.context;
-	this.x;
-	this.y;
+	this.radius = 0;
+	this.arrowStrength = 0;
+	this.triangleSide = 0;  
+	this.context = null;
+	this.x = 0;
+	this.y = 0;
 }
 
 Spinner.prototype = {
-	spin: function(boo) {
+	spin: function() {
 		this.canvas.classList.add('spinning');
 	},
 	stop: function() {
@@ -38,11 +43,11 @@ Spinner.prototype = {
 		// By default, canvas.width=300px, canvas.height=150px.
 
 		// the following are in pixels
-		this.canvas.width = this.canvas.style.width = this.elem.offsetWidth;
-		this.canvas.height = this.canvas.style.height = this.elem.offsetHeight;
+		this.canvas.width  = this.elem.offsetWidth;
+		this.canvas.height = this.elem.offsetHeight;
 
 		// the following are in pixels
-		this.radius = parseInt(Math.min(this.canvas.width, this.canvas.height)) * .35;
+		this.radius = parseInt(Math.min(this.canvas.width, this.canvas.height),10) * .35;
 		this.arrowStrength = this.radius * .5;
 		this.triangleSide = this.radius * .5;  
 

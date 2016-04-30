@@ -9,11 +9,29 @@ appendScript = function(file) {
 	document.getElementsByTagName("head")[0].appendChild(script);
 }
 
+isArray = function(a) {
+	return (Object.prototype.toString.call(a) === '[object Array]');
+}
+
+cloneArray = function(a) {
+	var n = [];
+	for(var i=0; i<a.length; i++) {
+		n[i]=a[i];
+	}
+	return n;
+}
+
 clone = function(obj) {
+	if (isArray(obj)) {
+		return cloneArray(obj);
+	}
 	var newObj={};
 	for(i in obj) {
 		if (obj[i]&&typeof obj[i]=="object") {
 			newObj[i]=clone(obj[i]);
+		}
+		else if (isArray(obj[i])) {
+			newObj[i]=cloneArray(obj[i]);
 		}
 		else {
 			newObj[i]=obj[i];
@@ -24,12 +42,12 @@ clone = function(obj) {
 
 center = function(elem, container) {
 	// center a div within a container
-	var g = document.getElementById(elem);
+	var g = elem;
 	g.style.margin = 'auto auto';
 	var gHt = g.offsetHeight;
 	var gWid = g.offsetWidth;
 	
-	var f = document.getElementById(container);
+	var f = container;
 	var fHt = f.offsetHeight;
 	var fWid = f.offsetWidth;
 
@@ -68,7 +86,7 @@ getAbsolutePosition = function(e) {
 }
 
 // return a multi-line string display of an object's members
-dumpObject = function(obj,depth) {
+dumpObject = function(obj) {
 	incIndent = function() {
 		numIndent++;
 		indentstr = composeIndentStr(numIndent);
@@ -134,7 +152,7 @@ removeWhiteSpace = function(node) {
 			i--;
 		}
 		if(child.nodeType == 1) {
-			this.removeWhiteSpace(child);
+			removeWhiteSpace(child);
 		}
 	}
 }
@@ -171,30 +189,26 @@ isCssLoaded = function(filename) {
 }
 
 toggleCss = function(filename) {
-	if (this.isCssLoaded(filename)) {
-		this.unloadCss(filename);
+	if (isCssLoaded(filename)) {
+		unloadCss(filename);
 	}
 	else {
-		this.loadCss(filename);
+		loadCss(filename);
 	}
 }
 
+/**
+	@param {Element} elem
+	@param {string} attr
+	@param {string} value
+	@param {boolean} [boo]
+*/
 toggleAttribute = function(elem, attr, value, boo) {
-	var boo = boo || elem.getAttribute(attr);
+	var boo = (typeof(boo) == 'undefined') ? elem.hasAttribute(attr) : boo;
 	if (boo) {
 		elem.setAttribute(attr,value);
 	}
 	else {
 		elem.removeAttribute(attr);
 	}
-}
-
-findParentWithTag = function(elem, tag) {
-	var parent = null;
-	for ( var e=elem; e && e !== document; e = e.parentNode ) {
-		if (e.tagName.toLowerCase() == tag.toLowerCase()) {
-			parent = e;
-		}
-	}
-	return parent;
 }

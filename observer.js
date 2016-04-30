@@ -1,5 +1,6 @@
-﻿/*
-	Observer
+﻿/**
+	class Observer
+	@constructor
 	Passes Note objects from publishers to subscribers.
 */
 Observer = function() {
@@ -16,7 +17,7 @@ Observer.prototype = {
 		}
 
 		// add this callback to the callback-array for this notename
-		this.stack[notename].push( {'subscriber':subscriber, 'callback':callback});
+		this.stack[notename].push( {subscriber:subscriber, callback:callback});
 	},
 
 	publish: function(note) {

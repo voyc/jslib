@@ -1,4 +1,10 @@
-// derived from www.williammalone.com
+/**
+	class Sketch
+	@constructor
+	derived from www.williammalone.com
+	@param {Element|null} canvas - A canvas element in the html.
+	@param {Object} [options=null] - An object of option values.
+*/
 Sketch = function (canvas, options) {
 	this.canvas = canvas;
 
@@ -41,8 +47,8 @@ Sketch.prototype = {
 
 	// Redraws the canvas.
 	draw: function () {
-		this.canvas.width = parseInt(getComputedStyle(this.canvas).width);
-		this.canvas.height = parseInt(getComputedStyle(this.canvas).height);
+		this.canvas.width = parseInt(getComputedStyle(this.canvas).width,10);
+		this.canvas.height = parseInt(getComputedStyle(this.canvas).height,10);
 
 		var locX,
 			locY,

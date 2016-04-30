@@ -1,15 +1,145 @@
+<!doctype html>
 <html>
 	<head>
 		<title>jslib Test</title>
+		<meta http-equiv='content-type' content='text/html; charset=UTF-8'/>
+		<meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1'>
+		<style>
+			voyclogo {
+				display:inline-block;
+				height:1em;
+				width:3em;
+				color:navy;  /* voycblue */
+				font-size:6vw;
+			}
+
+			.dragging {position:absolute;}
+			.highlight {border:1px solid red}
+			#redsquare {
+				position:absolute; 
+				top:50px; 
+				left:300px; 
+				width:100px; 
+				height:100px; 
+				background-color:red;
+			}
+
+			#sketchpad {
+				height:10rem;
+				width:30rem;
+				color:blue;
+				border:1px solid black;
+			}
+
+			#spinner {
+				display:inline-block;
+				height:6em;
+				width:6em;
+				color:maroon;
+				border:1px solid black;
+			}
+			.spinning {
+				animation: rotate-left 1.2s linear infinite;
+			}
+			@keyframes rotate-left {
+			  from { transform: rotate(0deg);}
+			  to {transform: rotate(360deg);}
+			}
+
+		</style>
+
+<?php if (false) { ?>
+		<script src='jslib.js'         ></script>
+		<script src='browserhistory.js'></script>
+		<script src='comm.js'          ></script>
+		<script src='cookie.js'        ></script>
+		<script src='dragger.js'       ></script>
+		<script src='note.js'          ></script>
+		<script src='observer.js'      ></script>
+		<script src='sketch.js'        ></script>
+		<script src='sound.js'         ></script>
+		<script src='spinner.js'       ></script>
+		<script src='utils.js'         ></script>
+		<script src='voyclogo.js'      ></script>
+<?php } else { ?>
+<!--<remove>
+		<script src='min.js'             ></script>
+<remove>-->
+<?php } ?>
+
 	</head>
 	<body>
 		<h1>jslib Test</h1>
-		<p>cookie - static methods to get, put, delete cookies</p>
-		<p>debug - debugging functions</p>
-		<p><a href='dragger.html'>dragger</a> - Drag and Drop</p>
-		<p><a href='comm.html'>comm</a> - XHR server communication</p>
-		<p><a href='observer.html'>observer</a> - Publish/Subscribe event model</p>
-		<p><a href='sound.html'>sound</a> - Buffer and play audio files</p>
-		<p>utils - Javascript utility functions</p>
+		<p>A Javascript Library of objects and functions.</p>
+		
+		<h2>BrowserHistory</h2>
+		<button id=winston>Winston</button>
+		<button id=genghis>Genghis</button>
+		<span id=pageid></span>
+
+		<h2>Comm</h2>
+		<p id='commtest'>
+			<textarea id="xinput" cols="20" rows="1">some text here</textarea>
+			<button id='echotest'>Echo Test</button>
+			<textarea id="xoutput" cols="20" rows="1"></textarea>
+		</p>
+		<p><a href='comm.html'>More comm tests.</a></p>
+
+		<h2>Cookie</h2>
+		<p>Static methods to get, put, delete cookies.  See console.</p>
+
+		<h2>Dragger</h2>
+		<div drag id='redsquare'></div>
+		<p>Drag the red square. <a href='dragger.html'>More dragger tests.</a></p>
+
+		<h2>Observer and Note</h2>
+		<p><input type="button" value="Publish" id='testobserver'/>
+		Publish/Subscribe event model.  See console. <a href='observer.html'>More observer tests.</a></p>
+
+		<h2>Sketch</h2>
+		<p>Implement a sketchpad. 
+		<input type='button' id='clear-btn' value='Clear'/>
+		<a href='sketch.html'>More sketch tests.</a></p>
+		<canvas id="sketchpad"></canvas>
+
+		<h2>Sound</h2>
+		<p>Buffer and play audio files.
+		<input type=button id=btnExplosionShort value='Explosion' />
+		<input type=button id=btnKlunk value=Klunk />
+		<span id='msg'>loading...</span>
+		<a href='sound.html'>More sound tests.</a></p>
+
+		<h2>Spinner</h2>
+		<p>A spinning progress indicator.</p>
+		<div id="spinner"></div>
+		<button id='togglespinner'>Toggle</button>
+		<a href='spinner.html'>More spinner tests.</a></p>
+
+		<h2>Utils</h2>
+		<p>Javascript utility functions.</p>
+		<ul>
+			<li>$()</li>
+			<li>appendScript()</li>
+			<li>isArray()</li>
+			<li>cloneArray()</li>
+			<li>clone()</li>
+			<li>center()</li>
+			<li>getAbsolutePosition()</li>
+			<li>dumpObject()</li>
+			<li>prepString()</li>
+			<li>removeWhiteSpace()</li>
+			<li>loadCss()</li>
+			<li>unloadCss()</li>
+			<li>isCssLoaded()</li>
+			<li>toggleCss()</li>
+			<li>toggleAttribute()</li>
+		</ul>
+
+		<h2>VoycLogo</h2>
+		<voyclogo></voyclogo>
+
+		<h3>Source</h3>
+		<p><a href='https://github.com/hagstrand/jslib'>github</a></p>
+		
 	</body>
 </html>

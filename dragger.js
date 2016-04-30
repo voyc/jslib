@@ -1,18 +1,18 @@
-/*
-	Creates a Dragger object.
+/**
+	class Dragger
+	@constructor
+	singleton
 	Adds dragging to HTML elements.
-	A singleton object. 
 	Three public methods: enableDrag(), enableDrop(), addListener(), showInternals().
-	Expects two classes
+	Expects two stylesheet classes:
 		.dragging {position:absolute;} - style the object as it is being dragged
 		.highlight {border:1px solid red} - style the drop target as it is hovered
 	Requires jslib/utils.js
 */
 Dragger = function() {
-	// make sure only one object is created
-	if ( arguments.callee._singletonInstance )
-		return arguments.callee._singletonInstance;
-	arguments.callee._singletonInstance = this;
+	// is singleton
+	if (Dragger._instance) return Dragger._instance;
+	else Dragger._instance = this;
 
 	this.internaldiv = null;
 	this.mousex = 0;
@@ -23,7 +23,7 @@ Dragger = function() {
 	this.oriy = 0;
 	this.elex = 0;
 	this.eley = 0;
-	this.dragobj;
+	this.dragobj = null;
 	
 	this.zIndex = 1;
 	
@@ -256,6 +256,6 @@ Dragger.prototype = {
 }
 
 // global functions.  (Methods cannot be used with removeEventListener.)
-dgrab = function(e) { Dragger().ongrab(e); }
-ddrag = function(e) { Dragger().ondrag(e); }
-ddrop = function(e) { Dragger().ondrop(e); }
+dgrab = function(e) { (new Dragger()).ongrab(e); }
+ddrag = function(e) { (new Dragger()).ondrag(e); }
+ddrop = function(e) { (new Dragger()).ondrop(e); }

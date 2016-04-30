@@ -6,41 +6,25 @@
 	<meta equiv='X-UA-Compatible' content='IE=8'> <!-- for ie8 drag-n-drop bug -->
 
 	<style>
-		#logo {
-			position:fixed;
-			height:100%;
-			width:100%;
-			color:navy;
+		voyclogo {
+			display:inline-block;
+			height:1em;
+			width:3em;
+			color:navy;  /* voycblue */
 		}
+
 		#logo2 {
 			position:fixed;
-			height:2rem;
-			width:8rem;
+			font-size:20vw;
 			color:fuchsia;
-			border:1px solid gray;
 		}
 	</style>
 
 	<script src='voyclogo.js'></script>
 
-	<script>
-		var logo = null;
-		var logo2 = null;
-
-		window.addEventListener('load', function() {
-			logo = new VoycLogo(document.getElementById('logo'));
-			logo2 = new VoycLogo(document.getElementById('logo2'));
-			logo.draw();
-			logo2.draw();
-		}, false);
-		window.addEventListener('resize', function() {
-			logo.draw();
-			logo2.draw();
-		}, false);
-	</script>
 </head>
 <body>
-	<div id='logo'></div>
-	<div id='logo2'></div>
+	<voyclogo></voyclogo><br/>
+	<voyclogo id='logo2'></voyclogo>
 </body>
 </html>

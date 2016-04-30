@@ -1,14 +1,22 @@
 /**
     class Cookie
-      static class, not instantiated
-      contains three static methods
-         Cookie.set( name, value)
-         Cookie.get( name)
-         Cookie.delete( name)
+		static class, not instantiated
+		contains three static methods
+			Cookie.set( name, value)
+			Cookie.get( name)
+			Cookie.delete( name)
 **/
 function Cookie() {
 }
 
+/**
+	@param {string} name
+	@param {string} value
+	@param {Object} [expires=null]
+	@param {string} [path='']
+	@param {string} [domain='']
+	@param {string} [secure='']
+*/
 Cookie.set = function(name, value, expires, path, domain, secure) {
   var sname = name;
   // default to six months
@@ -47,6 +55,11 @@ Cookie.get = function(name) {
   return unescape(dc.substring(begin + prefix.length, end));
 }
 
+/**
+	@param {string} name
+	@param {string} [path='']
+	@param {string} [domain='']
+*/
 Cookie.delete = function(name, path, domain) {
   var sname = name;
   if (Cookie.get(sname))

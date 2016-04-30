@@ -1,0 +1,38 @@
+<html>
+<head>
+<title>Hist</title>
+
+<script src='browserhistory.js'></script>
+
+<script>
+
+addEventListener('load', function(event) {
+	new BrowserHistory('name', function(pageid) {
+		document.title = 'Hist ' + pageid
+		document.getElementById('content').innerHTML = 'This is a story about ' + pageid + '.';
+	});
+
+	var btns = document.querySelectorAll('button');
+	for (var i=0; i<btns.length; i++) {
+		btns[i].addEventListener('click', function(event) {
+			(new BrowserHistory).nav(event.currentTarget.id);
+		}, false);
+	}
+}, false)
+
+</script>
+</head>
+<body>
+<div>
+	<button id=winston>Winston</button>
+	<button id=genghis>Genghis</button>
+	<button id=houston>Houston</button>
+	<button id=murray>Murray</button>
+	<button id=oberheim>Oberheim</button>
+	<button id=tentanbach>Tentanbach</button>
+</div>
+<br/>
+<div id=content>
+</div>
+</body>
+</html>
