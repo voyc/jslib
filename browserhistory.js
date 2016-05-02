@@ -31,13 +31,13 @@ BrowserHistory = function(keyword, onNavCallback) {
 BrowserHistory.prototype.nav = function(pageid) {
 	if (!(window.location.protocol.indexOf('file') > -1)) {
 		var url = '?' + this.keyword + '='+pageid
-		window.history.pushState({pageid:pageid}, '', url);
+		window.history.pushState({'pageid':pageid}, '', url);
 	}
 	this.onNavCallback(pageid);
 }
 
 // called by windows on back button
 window.onpopstate = function(event) {
-	var pageid = (event.state) ? event.state['pageid'] : '';
+	var pageid = (event['state']) ? event['state']['pageid'] : '';
 	(new BrowserHistory()).onNavCallback(pageid);
 }

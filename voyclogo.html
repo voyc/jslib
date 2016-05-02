@@ -6,17 +6,19 @@
 	<meta equiv='X-UA-Compatible' content='IE=8'> <!-- for ie8 drag-n-drop bug -->
 
 	<style>
-		voyclogo {
-			display:inline-block;
+		.voyclogo {
 			height:1em;
 			width:3em;
 			color:navy;  /* voycblue */
 		}
-
+		.voyclogo.ftr {
+			margin-top:.6em;
+		}
 		#logo2 {
-			position:fixed;
-			font-size:20vw;
 			color:fuchsia;
+		}
+		.resizeable {
+			font-size:20vw;
 		}
 	</style>
 
@@ -24,7 +26,8 @@
 
 </head>
 <body>
-	<voyclogo></voyclogo><br/>
-	<voyclogo id='logo2'></voyclogo>
+	<span class='voyclogo' id='logo2'>voyc</span>
+	<div class='voyclogo resizeable'>voyc</div>
+	<a class='ftr voyclogo' target='_blank' href='http://voyc.com'>voyc</a>
 </body>
 </html>

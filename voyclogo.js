@@ -15,10 +15,21 @@ function VoycLogo() {
 VoycLogo.prototype = {
 	attachAll: function(element) {
 		var elem = element || document;
-		var logos = elem.querySelectorAll('voyclogo');
+		var logos = elem.querySelectorAll('.voyclogo');
 		for (var i=0; i<logos.length; i++) {
-			this.logos.push(logos[i]);
-			logos[i].appendChild(document.createElement('canvas'));
+			// save style information
+			var w = logos[i].offsetWidth;
+			var h = logos[i].offsetHeight;
+			var color = window.getComputedStyle(logos[i]).color;
+			var resizeable = logos[i].classList.contains('resizeable');
+
+			// replace all children with one canvas
+			logos[i].innerHTML = '';
+			var canvas = document.createElement('canvas');
+			logos[i].appendChild(canvas);
+
+			// save for drawing
+			this.logos.push({elem:logos[i], canvas:canvas, w:w, h:h, color:color, resizeable:resizeable});
 		}
 	},
 	drawAll: function() {
@@ -26,21 +37,23 @@ VoycLogo.prototype = {
 			this.draw(this.logos[i]);
 		}
 	},
-	draw: function(elem) {
-		var canvas = elem.firstChild;
+	draw: function(o) {
+		var canvas = o.canvas;
+		var w = o.w;
+		var h = o.h;
+		var color = o.color;
 
-		// canvas.width is NOT equal to canvas.style.width
-		// canvas.style.width is the size of the html element
-		// canvas.width is the size of the drawing surface
-		// By default, canvas.width=300px, canvas.height=150px.
-		// The drawing surface is scaled into the size of the HTML element.
+		// adjust to size of container
+		if (o.resizeable) {
+			w = o.elem.offsetWidth;
+			h = o.elem.offsetHeight;
+		}
 
-		// the following are in pixels
-
-		var style = window.getComputedStyle(elem);
-		var w = canvas.width  = parseInt(style.width,10);
-		var h = canvas.height = parseInt(style.height,10);
-		var color = style.color;
+		// By default, canvas.width is NOT equal to canvas.style.width
+		canvas.width  = w;
+		canvas.height = h;
+		canvas.style.width = w + 'px';
+		canvas.style.height = h + 'px';
 
 		// letter box
 		var bw = w / 4;
