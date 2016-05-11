@@ -162,7 +162,7 @@ voyc.loadCss = function(filename) {
 	css.setAttribute('rel', 'stylesheet');
 	css.setAttribute('type', 'text/css');
 	css.setAttribute('href', filename);
-//	document.getElementsByTagName('head')[0].appendChild(css);
+	document.getElementsByTagName('head')[0].appendChild(css);
 }
 
 voyc.unloadCss = function(filename) {
@@ -190,7 +190,7 @@ voyc.isCssLoaded = function(filename) {
 
 voyc.toggleCss = function(filename) {
 	if (voyc.isCssLoaded(filename)) {
-		unloadCss(filename);
+		voyc.unloadCss(filename);
 	}
 	else {
 		voyc.loadCss(filename);
