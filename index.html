@@ -47,6 +47,11 @@
 		</style>
 
 <?php if (false) { ?>
+		<script>
+			/** @const */ var voyc = {};  // global namespace internal, compiler removes
+			window['voyc'] = {};  // global namespace external, compiler keeps
+		</script>
+
 		<script src='jslib.js'         ></script>
 		<script src='browserhistory.js'></script>
 		<script src='comm.js'          ></script>
@@ -55,7 +60,6 @@
 		<script src='note.js'          ></script>
 		<script src='observer.js'      ></script>
 		<script src='sketch.js'        ></script>
-		<script src='sound.js'         ></script>
 		<script src='spinner.js'       ></script>
 		<script src='utils.js'         ></script>
 		<script src='voyclogo.js'      ></script>
@@ -100,13 +104,6 @@
 		<a href='sketch.html'>More sketch tests.</a></p>
 		<canvas id="sketchpad"></canvas>
 
-		<h2>Sound</h2>
-		<p>Buffer and play audio files.
-		<input type=button id=btnExplosionShort value='Explosion' />
-		<input type=button id=btnKlunk value=Klunk />
-		<span id='msg'>loading...</span>
-		<a href='sound.html'>More sound tests.</a></p>
-
 		<h2>Spinner</h2>
 		<p>A spinning progress indicator.</p>
 		<div id="spinner"></div>
@@ -137,7 +134,7 @@
 		<a class='ftr voyclogo' target='_blank' href='http://voyc.com'>voyc</a>
 
 		<h3>Source</h3>
-		<p><a href='https://github.com/hagstrand/jslib'>github</a></p>
+		<p><a href='https://github.com/voyc/jslib'>github</a></p>
 		
 	</body>
 </html>

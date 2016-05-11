@@ -4,15 +4,15 @@
 		singleton
 		draws the voyc logo on a canvas
 **/
-function VoycLogo() {
+voyc.VoycLogo = function() {
 	// is singleton
-	if (VoycLogo._instance) return VoycLogo._instance;
-	else VoycLogo._instance = this;
+	if (voyc.VoycLogo._instance) return voyc.VoycLogo._instance;
+	else voyc.VoycLogo._instance = this;
 
 	this.logos = [];
 }
 
-VoycLogo.prototype = {
+voyc.VoycLogo.prototype = {
 	attachAll: function(element) {
 		var elem = element || document;
 		var logos = elem.querySelectorAll('.voyclogo');
@@ -117,10 +117,10 @@ VoycLogo.prototype = {
 	},
 }
 addEventListener('load', function() {
-	var logo = new VoycLogo();
+	var logo = new voyc.VoycLogo();
 	logo.attachAll(document);
 	logo.drawAll();
 }, false);
 addEventListener('resize', function() {
-	(new VoycLogo()).drawAll();
+	(new voyc.VoycLogo()).drawAll();
 }, false);

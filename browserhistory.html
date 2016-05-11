@@ -1,13 +1,10 @@
 <html>
 <head>
 <title>Hist</title>
-
-<script src='browserhistory.js'></script>
-
 <script>
-
+/** @const */ var voyc = {};
 addEventListener('load', function(event) {
-	new BrowserHistory('name', function(pageid) {
+	new voyc.BrowserHistory('name', function(pageid) {
 		document.title = 'Hist ' + pageid
 		document.getElementById('content').innerHTML = 'This is a story about ' + pageid + '.';
 	});
@@ -15,12 +12,12 @@ addEventListener('load', function(event) {
 	var btns = document.querySelectorAll('button');
 	for (var i=0; i<btns.length; i++) {
 		btns[i].addEventListener('click', function(event) {
-			(new BrowserHistory).nav(event.currentTarget.id);
+			(new voyc.BrowserHistory).nav(event.currentTarget.id);
 		}, false);
 	}
 }, false)
-
 </script>
+<script src='browserhistory.js'></script>
 </head>
 <body>
 <div>

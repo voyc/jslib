@@ -3,11 +3,11 @@
 	@constructor
 	Passes Note objects from publishers to subscribers.
 */
-Observer = function() {
+voyc.Observer = function() {
 	this.stack = [];
 }
 
-Observer.prototype = {
+voyc.Observer.prototype = {
 	subscribe: function(notename, subscriber, callback) {
 		//console.log('note '+notename+' subscribed to by '+subscriber);
 	

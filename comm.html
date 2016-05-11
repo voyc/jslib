@@ -1,7 +1,7 @@
 ﻿<!doctype html>
 <html>
 	<head>
-		<title>comm test</title>
+		<title>Comm Test</title>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<style>
@@ -9,18 +9,14 @@
 				height: 40px;
 			}
 		</style>
-
-		<script src="comm.js" type="text/javascript"></script>
-		
-		<title>Comm Test</title>
-		
 		<script>
+			/** @const */ var voyc = {};
 			var commEcho = null;
 			var commStress = null;
 
 			onload = function() {
-				commEcho = new Comm('http://guru.hagstrand.com/svc/');
-				commStress = new Comm('http://guru.hagstrand.com/svc/');
+				commEcho = new voyc.Comm('http://guru.hagstrand.com/svc/');
+				commStress = new voyc.Comm('http://guru.hagstrand.com/svc/');
 			}
 			
 			echotest = function() {
@@ -73,8 +69,8 @@
 				}
 			}
 		</script>
+		<script src="comm.js" type="text/javascript"></script>
 	</head>
-
 	<body>
 		<h1>comm Test</h1>
 		<h2>Echo Test</h2>

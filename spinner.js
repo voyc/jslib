@@ -3,7 +3,7 @@
 	@constructor
 	Draw a spinning progress indicator.
 */
-function Spinner(elem) {
+voyc.Spinner = function(elem) {
 	this.elem = elem;
 	this.canvas = document.createElement('canvas');
 	this.elem.appendChild(this.canvas);
@@ -23,7 +23,7 @@ function Spinner(elem) {
 	this.y = 0;
 }
 
-Spinner.prototype = {
+voyc.Spinner.prototype = {
 	spin: function() {
 		this.canvas.classList.add('spinning');
 	},

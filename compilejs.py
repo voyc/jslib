@@ -5,25 +5,31 @@ import httplib, urllib, sys
 # Define the parameters for the POST request and encode them in
 # a URL-safe format.
 
-params = urllib.urlencode([
-	('code_url', 'http://jslib.hagstrand.com/jslib.js'),
-	('code_url', 'http://jslib.hagstrand.com/browserhistory.js'),
-	('code_url', 'http://jslib.hagstrand.com/comm.js'),
-	('code_url', 'http://jslib.hagstrand.com/cookie.js'),
-	('code_url', 'http://jslib.hagstrand.com/dragger.js'),
-	('code_url', 'http://jslib.hagstrand.com/note.js'),
-	('code_url', 'http://jslib.hagstrand.com/observer.js'),
-	('code_url', 'http://jslib.hagstrand.com/sketch.js'),
-	('code_url', 'http://jslib.hagstrand.com/sound.js'),
-	('code_url', 'http://jslib.hagstrand.com/spinner.js'),
-	('code_url', 'http://jslib.hagstrand.com/utils.js'),
-	('code_url', 'http://jslib.hagstrand.com/voyclogo.js'),
+url = 'http://jslib.voyc.com/'
+
+arr = [
+	('code_url', url + 'namespace.js'),
+	('code_url', url + 'jslib.js'),
+	('code_url', url + 'browserhistory.js'),
+	('code_url', url + 'comm.js'),
+	('code_url', url + 'cookie.js'),
+	('code_url', url + 'dragger.js'),
+	('code_url', url + 'note.js'),
+	('code_url', url + 'observer.js'),
+	('code_url', url + 'sketch.js'),
+	('code_url', url + 'spinner.js'),
+	('code_url', url + 'utils.js'),
+	('code_url', url + 'voyclogo.js'),
 	('compilation_level', 'ADVANCED_OPTIMIZATIONS'),
 	('language', 'ECMASCRIPT5'),
 	('output_format', 'text'),
 	('output_info', 'compiled_code'),
-	#('formatting', 'pretty_print'),
-])
+]
+
+if (len(sys.argv) > 1):
+	arr.append(('formatting', 'pretty_print'))
+
+params = urllib.urlencode(arr)
 
 # Always use the following value for the Content-type header.
 headers = { "Content-type": "application/x-www-form-urlencoded" }

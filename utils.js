@@ -1,19 +1,19 @@
-$ = function(s) {
+voyc.$ = function(s) {
 	return document.getElementById(s);
 }
 
-appendScript = function(file) {
+voyc.appendScript = function(file) {
 	var script = document.createElement("script");
 	script.type = "text/javascript";
 	script.src = file;
 	document.getElementsByTagName("head")[0].appendChild(script);
 }
 
-isArray = function(a) {
+voyc.isArray = function(a) {
 	return (Object.prototype.toString.call(a) === '[object Array]');
 }
 
-cloneArray = function(a) {
+voyc.cloneArray = function(a) {
 	var n = [];
 	for(var i=0; i<a.length; i++) {
 		n[i]=a[i];
@@ -21,17 +21,17 @@ cloneArray = function(a) {
 	return n;
 }
 
-clone = function(obj) {
-	if (isArray(obj)) {
-		return cloneArray(obj);
+voyc.clone = function(obj) {
+	if (voyc.isArray(obj)) {
+		return voyc.cloneArray(obj);
 	}
 	var newObj={};
 	for(i in obj) {
 		if (obj[i]&&typeof obj[i]=="object") {
-			newObj[i]=clone(obj[i]);
+			newObj[i]=voyc.clone(obj[i]);
 		}
-		else if (isArray(obj[i])) {
-			newObj[i]=cloneArray(obj[i]);
+		else if (voyc.isArray(obj[i])) {
+			newObj[i]=voyc.cloneArray(obj[i]);
 		}
 		else {
 			newObj[i]=obj[i];
@@ -40,7 +40,7 @@ clone = function(obj) {
 	return newObj;
 }
 
-center = function(elem, container) {
+voyc.center = function(elem, container) {
 	// center a div within a container
 	var g = elem;
 	g.style.margin = 'auto auto';
@@ -67,7 +67,7 @@ center = function(elem, container) {
 	}
 }
 
-getAbsolutePosition = function(e) {
+voyc.getAbsolutePosition = function(e) {
 	var x = 0;
 	var y = 0;
 	if (e.offsetParent)
@@ -86,7 +86,7 @@ getAbsolutePosition = function(e) {
 }
 
 // return a multi-line string display of an object's members
-dumpObject = function(obj) {
+voyc.dumpObject = function(obj) {
 	incIndent = function() {
 		numIndent++;
 		indentstr = composeIndentStr(numIndent);
@@ -128,7 +128,7 @@ dumpObject = function(obj) {
 	return str;
 }
 
-prepString = function(s, a, o) {
+voyc.prepString = function(s, a, o) {
 	// s = "We're so $1 to hear about your recent $2."
 	// a = ['thrilled', 'misfortune'];
 	// o = optional associative array of strings keyed by the values in a
@@ -144,7 +144,7 @@ prepString = function(s, a, o) {
 	return target;
 }
 
-removeWhiteSpace = function(node) {
+voyc.removeWhiteSpace = function(node) {
 	for (var i=0; i<node.childNodes.length; i++) {
 		var child = node.childNodes[i];
 		if(child.nodeType == 3 && !/\S/.test(child.nodeValue)) {
@@ -152,20 +152,20 @@ removeWhiteSpace = function(node) {
 			i--;
 		}
 		if(child.nodeType == 1) {
-			removeWhiteSpace(child);
+			voyc.removeWhiteSpace(child);
 		}
 	}
 }
 
-loadCss = function(filename) {
+voyc.loadCss = function(filename) {
 	var css = document.createElement('link');
 	css.setAttribute('rel', 'stylesheet');
 	css.setAttribute('type', 'text/css');
 	css.setAttribute('href', filename);
-	document.getElementsByTagName('head')[0].appendChild(css);
+//	document.getElementsByTagName('head')[0].appendChild(css);
 }
 
-unloadCss = function(filename) {
+voyc.unloadCss = function(filename) {
 	var a = document.getElementsByTagName('link')
 	for (var c,h,i=a.length-1; i>=0; i--) {
 		c = a[i];
@@ -176,7 +176,7 @@ unloadCss = function(filename) {
 	}
 }
 
-isCssLoaded = function(filename) {
+voyc.isCssLoaded = function(filename) {
 	var a = document.getElementsByTagName('link')
 	for (var c,h,i=a.length-1; i>=0; i--) {
 		c = a[i];
@@ -188,12 +188,12 @@ isCssLoaded = function(filename) {
 	return false;
 }
 
-toggleCss = function(filename) {
-	if (isCssLoaded(filename)) {
+voyc.toggleCss = function(filename) {
+	if (voyc.isCssLoaded(filename)) {
 		unloadCss(filename);
 	}
 	else {
-		loadCss(filename);
+		voyc.loadCss(filename);
 	}
 }
 
@@ -203,7 +203,7 @@ toggleCss = function(filename) {
 	@param {string} value
 	@param {boolean} [boo]
 */
-toggleAttribute = function(elem, attr, value, boo) {
+voyc.toggleAttribute = function(elem, attr, value, boo) {
 	var boo = (typeof(boo) == 'undefined') ? elem.hasAttribute(attr) : boo;
 	if (boo) {
 		elem.setAttribute(attr,value);

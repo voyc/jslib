@@ -27,20 +27,20 @@
 		}
 	</style>
 
-	<script src='spinner.js'></script>
-
 	<script>
+		/** @const */ var voyc = {};
 		var spinner1 = null;
 		var spinner2 = null;
 
 		onload = function() {
-			spinner1 = new Spinner(document.getElementById('c1'));
+			spinner1 = new voyc.Spinner(document.getElementById('c1'));
 			spinner1.draw();
 
-			spinner2 = new Spinner(document.getElementById('c2'));
+			spinner2 = new voyc.Spinner(document.getElementById('c2'));
 			spinner2.draw();
 		}
 	</script>
+	<script src='spinner.js'></script>
 </head>
 <body>
 	<div id="c1"></div><br/>

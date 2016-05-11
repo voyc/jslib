@@ -14,27 +14,27 @@ addEventListener('load', function(event) {
 	console.log('onload');
 
 	// test browserhistory.  Works only from server.
-	new BrowserHistory('name', function(pageid) {
+	new voyc.BrowserHistory('name', function(pageid) {
 		document.title = 'jslib Test ' + pageid
 		document.getElementById('pageid').innerHTML = 'This is page: ' + (pageid || 'home') + '.';
 	});
-	$('genghis').addEventListener('click', function(event) {
-		(new BrowserHistory).nav('genghis');
+	voyc.$('genghis').addEventListener('click', function(event) {
+		(new voyc.BrowserHistory).nav('genghis');
 	}, false);
-	$('winston').addEventListener('click', function(event) {
-		(new BrowserHistory).nav('winston');
+	voyc.$('winston').addEventListener('click', function(event) {
+		(new voyc.BrowserHistory).nav('winston');
 	}, false);
 
 	// test comm
-	comm = new Comm('http://guru.hagstrand.com/svc/');
-	$('echotest').addEventListener('click', function(evt) {
+	comm = new voyc.Comm('http://guru.hagstrand.com/svc/');
+	voyc.$('echotest').addEventListener('click', function(evt) {
 		var a = {
-			data: $("xinput").value,
+			data: voyc.$("xinput").value,
 			stress: '0'
 		}
 		comm.request('echo', a, function(ok, response, o) {
 			if (ok) {
-				$("xoutput").value = response['echo'];
+				voyc.$("xoutput").value = response['echo'];
 			}
 		});
 	}, false);
@@ -46,68 +46,49 @@ addEventListener('load', function(event) {
 	console.log('cookie test ' + ((test == '42') ? 'passed' : 'failed'));
 
 	// test dragger
-	dragger = new Dragger();
-	dragger.enableDrag($("redsquare"));
+	dragger = new voyc.Dragger();
+	dragger.enableDrag(voyc.$("redsquare"));
 
 	// test observer
-	observer = new Observer();
+	observer = new voyc.Observer();
 	observer.subscribe( 'testnotification', 'subscriber', function(note) {
 		console.log('received testnotification ' + note.payload['x']);
 	});
-	$('testobserver').addEventListener('click', function(event) {
-		observer.publish(new Note('testnotification', 'publisher', {x:'homer', y:'jethro'}));
+	voyc.$('testobserver').addEventListener('click', function(event) {
+		observer.publish(new voyc.Note('testnotification', 'publisher', {x:'homer', y:'jethro'}));
 	}, false);
 
 	// test sketch
-	sketch = new Sketch($('sketchpad'));
+	sketch = new voyc.Sketch(voyc.$('sketchpad'));
 	sketch.draw();
-	$('clear-btn').addEventListener('click', function(event) {
+	voyc.$('clear-btn').addEventListener('click', function(event) {
 		sketch.clear();
 	}, false);
 
-	// test sound
-	var urlpattern = 'a/%sound%.mp3';
-	var fxfiles = [
-		'explosionshort',
-		'klunk',
-	];
-	window.AudioContext = window.AudioContext || window.webkitAudioContext;
-	var context = new AudioContext();
-	sound = new Sound(context);
-	sound.loadSounds(urlpattern, fxfiles, function() {
-		$('msg').innerHTML = 'loaded';
-	});
-	$('btnExplosionShort').addEventListener('click', function() { 
-		sound.play( 'explosionshort');
-	}, false);
-	$('btnKlunk').addEventListener('click', function() { 
-		sound.play( 'klunk');
-	}, false);
-	
 	// test spinner
-	var spinner = new Spinner($('spinner'));
+	var spinner = new voyc.Spinner(voyc.$('spinner'));
 	spinner.draw();
 	spinner.spin();
-	$('togglespinner').addEventListener('click', function(evt) {
+	voyc.$('togglespinner').addEventListener('click', function(evt) {
 		spinner.toggle();
 	}, false);
 	
 	// test utils
-	var x = $('togglespinner');
-	appendScript('cookie.js');
-	var b = isArray([1,2,3]);
-	var a = cloneArray(['a','b','c']);
-	var o = clone({a:1,b:2,c:[4,5,6],x:'xyz'});
-	center($('redsquare'), window);
-	var pos = getAbsolutePosition($('redsquare'));
-	var s = dumpObject({a:1,b:2,c:[4,5,6],x:'xyz'});
-	var t = prepString("We're so $1 to hear about your recent $2.", ['thrilled', 'misfortune'], null);
-	removeWhiteSpace($('commtest'));
-	loadCss('http://minimal.hagstrand.com/theme/mahagony.css');
-	unloadCss('http://minimal.hagstrand.com/theme/mahagony.css');
-	isCssLoaded('http://minimal.hagstrand.com/theme/mahagony.css');
-	toggleCss('http://minimal.hagstrand.com/theme/mahagony.css');
-	toggleAttribute($('redsquare'), 'xyz', 'offen');
+	var x = voyc.$('togglespinner');
+	voyc.appendScript('cookie.js');
+	var b = voyc.isArray([1,2,3]);
+	var a = voyc.cloneArray(['a','b','c']);
+	var o = voyc.clone({a:1,b:2,c:[4,5,6],x:'xyz'});
+	voyc.center(voyc.$('redsquare'), window);
+	var pos = voyc.getAbsolutePosition(voyc.$('redsquare'));
+	var s = voyc.dumpObject({a:1,b:2,c:[4,5,6],x:'xyz'});
+	var t = voyc.prepString("We're so $1 to hear about your recent $2.", ['thrilled', 'misfortune'], null);
+	voyc.removeWhiteSpace(voyc.$('commtest'));
+	voyc.loadCss('http://minimal.hagstrand.com/theme/mahagony.css');
+	voyc.unloadCss('http://minimal.hagstrand.com/theme/mahagony.css');
+	voyc.isCssLoaded('http://minimal.hagstrand.com/theme/mahagony.css');
+	voyc.toggleCss('http://minimal.hagstrand.com/theme/mahagony.css');
+	voyc.toggleAttribute(voyc.$('redsquare'), 'xyz', 'offen');
 	
 	console.log('onload complete');
 }, false)

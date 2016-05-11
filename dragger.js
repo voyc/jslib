@@ -9,10 +9,10 @@
 		.highlight {border:1px solid red} - style the drop target as it is hovered
 	Requires jslib/utils.js
 */
-Dragger = function() {
+voyc.Dragger = function() {
 	// is singleton
-	if (Dragger._instance) return Dragger._instance;
-	else Dragger._instance = this;
+	if (voyc.Dragger._instance) return voyc.Dragger._instance;
+	else voyc.Dragger._instance = this;
 
 	this.internaldiv = null;
 	this.mousex = 0;
@@ -37,12 +37,12 @@ Dragger = function() {
 	};
 }
 
-Dragger.prototype = {
+voyc.Dragger.prototype = {
 	// Make a specified element draggable.
 	enableDrag: function(e) {
 		var self = this;
-		e.addEventListener('touchstart', dgrab, false);
-		e.addEventListener('mousedown', dgrab, false);
+		e.addEventListener('touchstart', window['voyc'].dgrab, false);
+		e.addEventListener('mousedown', window['voyc'].dgrab, false);
 		this.draggables.push(e)
 	},
 
@@ -92,10 +92,10 @@ Dragger.prototype = {
 		this.dragobj = e.currentTarget;
 		
 		var self = this;
-		this.dragobj.addEventListener('touchmove', ddrag, false);
-		this.dragobj.addEventListener('mousemove', ddrag, false);
-		this.dragobj.addEventListener('touchend', ddrop, false);
-		this.dragobj.addEventListener('mouseup', ddrop, false);
+		this.dragobj.addEventListener('touchmove', window['voyc'].ddrag, false);
+		this.dragobj.addEventListener('mousemove', window['voyc'].ddrag, false);
+		this.dragobj.addEventListener('touchend', window['voyc'].ddrop, false);
+		this.dragobj.addEventListener('mouseup', window['voyc'].ddrop, false);
 		this.dragobj.classList.add('dragging');
 
 		this.grbx = this.mousex;
@@ -167,8 +167,8 @@ Dragger.prototype = {
 				}
 			}
 	
-			this.dragobj.removeEventListener('touchmove', ddrag, false);
-			this.dragobj.removeEventListener('touchend', ddrop, false);
+			this.dragobj.removeEventListener('touchmove', window['voyc'].ddrag, false);
+			this.dragobj.removeEventListener('touchend', window['voyc'].ddrop, false);
 			this.dragobj.classList.remove('dragging');
 			this.dragobj = null;
 		}
@@ -256,6 +256,6 @@ Dragger.prototype = {
 }
 
 // global functions.  (Methods cannot be used with removeEventListener.)
-dgrab = function(e) { (new Dragger()).ongrab(e); }
-ddrag = function(e) { (new Dragger()).ondrag(e); }
-ddrop = function(e) { (new Dragger()).ondrop(e); }
+window['voyc'].dgrab = function(e) { (new voyc.Dragger()).ongrab(e); }
+window['voyc'].ddrag = function(e) { (new voyc.Dragger()).ondrag(e); }
+window['voyc'].ddrop = function(e) { (new voyc.Dragger()).ondrop(e); }

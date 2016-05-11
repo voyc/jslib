@@ -61,11 +61,11 @@
 			border-bottom:2px solid red;
 		}
 	</style>
-	<script src="dragger.js" type="text/javascript"></script>
-	<script src="utils.js" type="text/javascript"></script>
 	<script>
+		/** @const */ var voyc = {};  // global internal, compiler removes
+		window['voyc'] = {};  // global external, compiler keeps
 		window.onload = function() {
-			dragger = new Dragger();
+			dragger = new voyc.Dragger();
 
 			// request info for debugging
 			dragger.setInternals(document.getElementById('internals'));
@@ -124,6 +124,8 @@
 			}
 		}
 	</script>
+	<script src="dragger.js" type="text/javascript"></script>
+	<script src="utils.js" type="text/javascript"></script>
 	</head>
 
 	<body>

@@ -50,21 +50,20 @@
 		}
 	</style>
 
-	<script src='sketch.js'></script>
-
 	<script>
+		/** @const */ var voyc = {};
 		var sketch1 = null;
 		var sketch2 = null;
 		var sketch3 = null;
 
 		onload = function() {
-			sketch1 = new Sketch(document.getElementById('d1'));
+			sketch1 = new voyc.Sketch(document.getElementById('d1'));
 			sketch1.draw();
 
-			sketch2 = new Sketch(document.getElementById('d2'));
+			sketch2 = new voyc.Sketch(document.getElementById('d2'));
 			sketch2.draw();
 
-			sketch3 = new Sketch(document.getElementById('canvas'));
+			sketch3 = new voyc.Sketch(document.getElementById('canvas'));
 			sketch3.setOptions({
 				penColor:'fuchsia',
 				hasGrid:true,
@@ -84,6 +83,7 @@
 			}, false);
 		}
 	</script>
+	<script src='sketch.js'></script>
 </head>
 <body>
 	<canvas id="d1"></canvas>

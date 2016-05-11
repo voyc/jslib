@@ -4,7 +4,7 @@
 	A Note is passed from publisher to subscribers 
 	by the Observer.
 */
-Note = function(name, publisher, payload) {
+voyc.Note = function(name, publisher, payload) {
 	this.name = name,
 	this.publisher = publisher,
 	this.payload = payload,
@@ -13,7 +13,7 @@ Note = function(name, publisher, payload) {
 	this.elapsed = 0;
 }
 
-Note.prototype = {
+voyc.Note.prototype = {
 	finish: function() {
 		this.end = Date.now();
 		this.elapsed = this.end - this.start;

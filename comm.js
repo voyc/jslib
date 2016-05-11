@@ -1,21 +1,17 @@
 ﻿/**
-	class Comm
-		@constructor
-		Server Communication
-		creates one Xhr object for each server request.
-		one public method: comm.request()
-		@param {string} baseUrl - URL to services
-		@param {string} [name=''] - Name of this instance.
-		@param {number} [retries = 3] - Number of retries in event of network failure.
+	Server Communication
+	creates one Xhr object for each server request.
+	one public method: comm.request()
 **/
-Comm = function(baseUrl,name, retries) {
+voyc.Comm = function(baseUrl, name, retries, consolidated) {
 	this.baseUrl = baseUrl;
 	this.name = name || '';
 	this.seq = 1;
 	this.maxretries = retries || 3;
+	this.consolidated = consolidated || false;  // if true, svcname is passed as post parameter
 }
 
-Comm.prototype = {
+voyc.Comm.prototype = {
 	/**
 		svc - string name of the service
 		data - javascript object, key-value pairs, all strings
@@ -28,7 +24,7 @@ Comm.prototype = {
 			xhr is the Xhr object, usually not used except for debugging
 	**/
 	request: function(svc, data, callback) {
-		var xhr = new Xhr();
+		var xhr = new voyc.Xhr();
 		xhr.base = this.baseUrl;
 		xhr.name = this.name;
 		xhr.svc = svc;
@@ -36,17 +32,16 @@ Comm.prototype = {
 		xhr.callback = callback;
 		xhr.seq = this.seq++;
 		xhr.maxretries = this.maxretries;
+		xhr.consolidated = this.consolidated;
 		xhr.callServer();
 	}
 }
 
 
 /**
-	class XHR
-		@constructor
-		Wraps XMLHttpRequest object
+ * Wraps XMLHttpRequest object
  */
-Xhr = function() {
+voyc.Xhr = function() {
 	this.req = null;
 	this.base = "http://guru.hagstrand.com/svc/";
 	this.svc = "echo";
@@ -60,9 +55,10 @@ Xhr = function() {
 	this.end = 0;
 	this.elapsed = 0;
 	this.ok = true;
+	this.consolidated = false;
 }
 
-Xhr.prototype = {
+voyc.Xhr.prototype = {
 	callServer :function() {
 		if (!this.retries) {
 			this.start = Date.now();
@@ -74,6 +70,12 @@ Xhr.prototype = {
 		this.req.onreadystatechange = function() { self._callback() };
 
 		var url = this.base + this.svc;
+		var data = this.data;
+		if (this.consolidated) {
+			url = this.base;
+			data['svc'] = this.svc;
+		}
+
 		this.req.open(this.method, url, true);
 
 		this.req.onabort = function() {
@@ -98,7 +100,7 @@ Xhr.prototype = {
 		// 2. http_build_query() converts this object to a string of key/value pairs
 		// 3. XmlHttpRequest posts this string
 		// 4. php parses this string into $_POST via parse_str()
-		var strdata = http_build_query(this.data);
+		var strdata = http_build_query(data);
 		this.req.send(strdata);
 		console.log(this.log('request ' + this.svc + ' sent'));
 	},

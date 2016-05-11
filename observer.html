@@ -1,9 +1,8 @@
 <html>
 	<head>
 		<title>Observer Test</title>
-		<script src="observer.js"></script>
-		<script src="note.js"></script>
 		<script>
+			/** @const */ var voyc = {};
 			window.onload = onLoad;
 			g = {};  // all global variables go in here
 
@@ -11,9 +10,9 @@
 				console.log("loading");
 
 				// Create three Observers, for testing only.  Normally each app uses only one Observer.
-				g.observer1 = new Observer();
-				g.observer2 = new Observer();
-				g.observer3 = new Observer();
+				g.observer1 = new voyc.Observer();
+				g.observer2 = new voyc.Observer();
+				g.observer3 = new voyc.Observer();
 
 				g.observer1.subscribe( "onClickOne", 'tester', onClickOne);
 				g.observer2.subscribe( "onClickTwo", 'tester', onClickTwo);
@@ -22,13 +21,13 @@
 				g.myobject = new MyObject(g.observer1);  // second subscribe to btn 1
 
 				document.getElementById('btn1').addEventListener('click', function(evt) {
-					g.observer1.publish(new Note("onClickOne", "self", {x:'homer', y:'jethro'}));
+					g.observer1.publish(new voyc.Note("onClickOne", "self", {x:'homer', y:'jethro'}));
 				}, false);
 				document.getElementById('btn2').addEventListener('click', function(evt) {
-					g.observer2.publish(new Note("onClickTwo", "self", {data:'xxxx'}));
+					g.observer2.publish(new voyc.Note("onClickTwo", "self", {data:'xxxx'}));
 				}, false);
 				document.getElementById('btn3').addEventListener('click', function(evt) {
-					g.observer3.publish(new Note("onClickThree", "self", {a:1,b:2}));
+					g.observer3.publish(new voyc.Note("onClickThree", "self", {a:1,b:2}));
 				}, false);
 			}
 
@@ -41,9 +40,7 @@
 			function onClickThree(note) {
 				alert(['in onClickThree', note.payload.a, note.payload.b]);
 			}
-		</script>
 
-		<script>
 			/* class MyObject */
 			function MyObject(observer) {
 				var self = this;
@@ -55,6 +52,8 @@
 				}
 			}
 		</script>
+		<script src="observer.js"></script>
+		<script src="note.js"></script>
 	</head>
 
 <body>

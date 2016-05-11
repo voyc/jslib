@@ -5,7 +5,7 @@
 	@param {Element|null} canvas - A canvas element in the html.
 	@param {Object} [options=null] - An object of option values.
 */
-Sketch = function (canvas, options) {
+voyc.Sketch = function (canvas, options) {
 	this.canvas = canvas;
 
 	// options
@@ -26,7 +26,7 @@ Sketch = function (canvas, options) {
 	this.createUserEvents();
 }
 
-Sketch.prototype = {
+voyc.Sketch.prototype = {
 	setOptions: function(options) {
 		this.penColor = (options.penColor) ? options.penColor : this.penColor;
 		this.hasGrid = (options.hasGrid) ? options.hasGrid : this.hasGrid;

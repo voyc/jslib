@@ -6,10 +6,10 @@
 			Example: http://mysite.com?keyword=pageid
 	@param {function(string)} [onNavCallback] Function that sets the title and draws the page.
 **/
-BrowserHistory = function(keyword, onNavCallback) {
+voyc.BrowserHistory = function(keyword, onNavCallback) {
 	// is singleton
-	if (BrowserHistory._instance) return BrowserHistory._instance;
-	else BrowserHistory._instance = this;
+	if (voyc.BrowserHistory._instance) return voyc.BrowserHistory._instance;
+	else voyc.BrowserHistory._instance = this;
 
 	this.keyword = keyword;
 	this.onNavCallback = onNavCallback;
@@ -28,7 +28,7 @@ BrowserHistory = function(keyword, onNavCallback) {
 }
 
 // public function called by app to display a new page
-BrowserHistory.prototype.nav = function(pageid) {
+voyc.BrowserHistory.prototype.nav = function(pageid) {
 	if (!(window.location.protocol.indexOf('file') > -1)) {
 		var url = '?' + this.keyword + '='+pageid
 		window.history.pushState({'pageid':pageid}, '', url);
@@ -39,5 +39,5 @@ BrowserHistory.prototype.nav = function(pageid) {
 // called by windows on back button
 window.onpopstate = function(event) {
 	var pageid = (event['state']) ? event['state']['pageid'] : '';
-	(new BrowserHistory()).onNavCallback(pageid);
+	(new voyc.BrowserHistory()).onNavCallback(pageid);
 }
