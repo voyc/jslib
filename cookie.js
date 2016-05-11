@@ -6,7 +6,7 @@
 			Cookie.get( name)
 			Cookie.delete( name)
 **/
-function Cookie() {
+voyc.Cookie = function() {
 }
 
 /**
@@ -17,7 +17,7 @@ function Cookie() {
 	@param {string} [domain='']
 	@param {string} [secure='']
 */
-Cookie.set = function(name, value, expires, path, domain, secure) {
+voyc.Cookie.set = function(name, value, expires, path, domain, secure) {
   var sname = name;
   // default to six months
   if (!expires) {
@@ -33,7 +33,7 @@ Cookie.set = function(name, value, expires, path, domain, secure) {
       ((secure) ? "; secure" : "");
 }
 
-Cookie.get = function(name) {
+voyc.Cookie.get = function(name) {
   var sname = name;
   var dc = document.cookie;
   var prefix = sname + "=";
@@ -60,9 +60,9 @@ Cookie.get = function(name) {
 	@param {string} [path='']
 	@param {string} [domain='']
 */
-Cookie.delete = function(name, path, domain) {
+voyc.Cookie.delete = function(name, path, domain) {
   var sname = name;
-  if (Cookie.get(sname))
+  if (voyc.Cookie.get(sname))
   {
       document.cookie = sname + "=" + 
           ((path) ? "; path=" + path : "") +

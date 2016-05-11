@@ -123,12 +123,12 @@ voyc.Sketch.prototype = {
 		e.preventDefault();
 	},
 
-	release: function () {
+	release: function (e) {
 		this.paint = false;
 		this.draw();
 	},
 
-	cancel: function () {
+	cancel: function (e) {
 		this.paint = false;
 	},
 

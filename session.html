@@ -1,0 +1,23 @@
+<!doctype html>
+<head>
+	<title>session test</title>
+	<script>
+		/** @const */ var voyc = {};
+		window.addEventListener('load', function(evt) {
+			console.log('domain: ' + document.domain);
+			console.log('root domain: ' + voyc.Session.getRootDomain());
+
+			var j = voyc.Session.get('juniper');
+			var j = voyc.Session.get('juniper');
+			console.log('session: ' + j);
+
+			voyc.Session.set('juniper', document.domain);
+			console.log('session set');
+			}, false);
+	</script>
+	<script src="cookie.js"></script>
+	<script src="session.js"></script>
+</head>
+<body>
+</body>
+</html>

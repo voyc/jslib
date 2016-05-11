@@ -41,8 +41,8 @@ voyc.Dragger.prototype = {
 	// Make a specified element draggable.
 	enableDrag: function(e) {
 		var self = this;
-		e.addEventListener('touchstart', window['voyc'].dgrab, false);
-		e.addEventListener('mousedown', window['voyc'].dgrab, false);
+		e.addEventListener('touchstart', voyc.dgrab, false);
+		e.addEventListener('mousedown', voyc.dgrab, false);
 		this.draggables.push(e)
 	},
 
@@ -92,10 +92,10 @@ voyc.Dragger.prototype = {
 		this.dragobj = e.currentTarget;
 		
 		var self = this;
-		this.dragobj.addEventListener('touchmove', window['voyc'].ddrag, false);
-		this.dragobj.addEventListener('mousemove', window['voyc'].ddrag, false);
-		this.dragobj.addEventListener('touchend', window['voyc'].ddrop, false);
-		this.dragobj.addEventListener('mouseup', window['voyc'].ddrop, false);
+		this.dragobj.addEventListener('touchmove', voyc.ddrag, false);
+		this.dragobj.addEventListener('mousemove', voyc.ddrag, false);
+		this.dragobj.addEventListener('touchend', voyc.ddrop, false);
+		this.dragobj.addEventListener('mouseup', voyc.ddrop, false);
 		this.dragobj.classList.add('dragging');
 
 		this.grbx = this.mousex;
@@ -114,7 +114,7 @@ voyc.Dragger.prototype = {
 		this.dragobj.style.zIndex = this.zIndex++;
 
 		e.preventDefault();
-		this.refreshInternals();
+		this.refreshInternals(e);
 	},
 	
 	// Event Handler for mousemove, touchmove on a dragging element.
@@ -150,7 +150,7 @@ voyc.Dragger.prototype = {
 	},
 	
 	// Event Handler for mouseup, touchend, and touchcancel on a dragging element.
-	ondrop : function() {
+	ondrop : function(e) {
 		console.log('dropped');
 		if (this.dragobj) {
 
@@ -167,12 +167,12 @@ voyc.Dragger.prototype = {
 				}
 			}
 	
-			this.dragobj.removeEventListener('touchmove', window['voyc'].ddrag, false);
-			this.dragobj.removeEventListener('touchend', window['voyc'].ddrop, false);
+			this.dragobj.removeEventListener('touchmove', voyc.ddrag, false);
+			this.dragobj.removeEventListener('touchend', voyc.ddrop, false);
 			this.dragobj.classList.remove('dragging');
 			this.dragobj = null;
 		}
-		this.refreshInternals();
+		this.refreshInternals(e);
 	},
 
 	intersectRect: function(r1, r2) {
@@ -196,7 +196,7 @@ voyc.Dragger.prototype = {
 		var o, r2;
 		for (var i=0; i<this.droppables.length; i++) {
 			o = this.droppables[i];
-			var p = getAbsolutePosition(o); // needed for tr which has table as offsetParent.  LI has body as offsetParent.
+			var p = voyc.getAbsolutePosition(o); // needed for tr which has table as offsetParent.  LI has body as offsetParent.
 			r2 = {
 				top:p.y,
 				left:p.x,
@@ -256,6 +256,6 @@ voyc.Dragger.prototype = {
 }
 
 // global functions.  (Methods cannot be used with removeEventListener.)
-window['voyc'].dgrab = function(e) { (new voyc.Dragger()).ongrab(e); }
-window['voyc'].ddrag = function(e) { (new voyc.Dragger()).ondrag(e); }
-window['voyc'].ddrop = function(e) { (new voyc.Dragger()).ondrop(e); }
+voyc.dgrab = function(e) { (new voyc.Dragger()).ongrab(e); }
+voyc.ddrag = function(e) { (new voyc.Dragger()).ondrag(e); }
+voyc.ddrop = function(e) { (new voyc.Dragger()).ondrop(e); }

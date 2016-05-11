@@ -2,6 +2,11 @@
 	Server Communication
 	creates one Xhr object for each server request.
 	one public method: comm.request()
+	@constructor
+	@param {string} baseUrl
+	@param {string|null} [name='']
+	@param {number|null} [retries=0]
+	@param {boolean} [consolidated]
 **/
 voyc.Comm = function(baseUrl, name, retries, consolidated) {
 	this.baseUrl = baseUrl;
@@ -39,7 +44,8 @@ voyc.Comm.prototype = {
 
 
 /**
- * Wraps XMLHttpRequest object
+	Wraps XMLHttpRequest object
+	@constructor
  */
 voyc.Xhr = function() {
 	this.req = null;

@@ -13,6 +13,7 @@ arr = [
 	('code_url', url + 'browserhistory.js'),
 	('code_url', url + 'comm.js'),
 	('code_url', url + 'cookie.js'),
+	('code_url', url + 'session.js'),
 	('code_url', url + 'dragger.js'),
 	('code_url', url + 'note.js'),
 	('code_url', url + 'observer.js'),

@@ -40,10 +40,15 @@ addEventListener('load', function(event) {
 	}, false);
 
 	// test cookie.  Works only from server.
-	Cookie.set('test', '42');
-	var test = Cookie.get('test');
-	Cookie.delete('test');
+	voyc.Cookie.set('test', '42');
+	var test = voyc.Cookie.get('test');
+	voyc.Cookie.delete('test');
 	console.log('cookie test ' + ((test == '42') ? 'passed' : 'failed'));
+
+	// test session.  Works only from server.
+	console.log('root domain: ' + voyc.Session.getRootDomain());
+	voyc.Session.set('juniper', document.domain);
+	console.log('juniper set to: ' + voyc.Session.get('juniper'));
 
 	// test dragger
 	dragger = new voyc.Dragger();
