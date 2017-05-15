@@ -24,7 +24,7 @@ voyc.BrowserHistory = function(keyword, onNavCallback) {
 			pageid = qstring.substring(pos);
 		}
 	}
-	this.onNavCallback(pageid);
+//	this.onNavCallback(pageid);
 }
 
 // public function called by app to display a new page
