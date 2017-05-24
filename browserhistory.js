@@ -13,18 +13,22 @@ voyc.BrowserHistory = function(keyword, onNavCallback) {
 
 	this.keyword = keyword;
 	this.onNavCallback = onNavCallback;
+	this.bookmark = '';
 
 	// on startup, we check for page request from bookmark
 	var qstring = window.location.search;
-	var pageid = '';
 	if (qstring.length > 0) {
 		var pos = qstring.indexOf(this.keyword + '=');
 		if (pos > -1) {
 			pos += this.keyword.length + 1;
-			pageid = qstring.substring(pos);
+			this.bookmark = qstring.substring(pos);
 		}
 	}
-//	this.onNavCallback(pageid);
+}
+
+// public function called by get the startup bookmark
+voyc.BrowserHistory.prototype.getBookmark = function() {
+	return this.bookmark;
 }
 
 // public function called by app to display a new page
