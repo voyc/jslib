@@ -1,4 +1,4 @@
 # jslib
 Library of javascript objects.
 
-http://jslib.hagstrand.com
+http://jslib.voyc.com
