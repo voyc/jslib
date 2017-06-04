@@ -1,0 +1,35 @@
+<html>
+<head>
+	<meta http-equiv='content-type' content='text/html; charset=UTF-8'/>
+	<title>Sync</title>
+	<meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1'>
+	<meta equiv='X-UA-Compatible' content='IE=8'> <!-- for ie8 drag-n-drop bug -->
+
+	<script>
+	/** @const */ var voyc = {};
+	addEventListener('load', function(event) {
+		var sync = new voyc.Sync();
+		sync.setup( function() {
+			document.getElementById('content').innerHTML = 'finished';
+		})
+		var btns = document.querySelectorAll('button');
+		for (var i=0; i<btns.length; i++) {
+			sync.set(btns[i].id, 'waiting');
+			btns[i].addEventListener('click', function(event) {
+				sync.set(event.currentTarget.id, 'ready');
+			}, false);
+		}
+	}, false)
+	</script>
+	<script src='sync.js'></script>
+</head>
+<body>
+<div>
+	<button id=winston>Winston</button>
+	<button id=genghis>Genghis</button>
+	<button id=houston>Houston</button>
+</div>
+<br/>
+<div id=content>waiting...</div>
+</body>
+</html>
