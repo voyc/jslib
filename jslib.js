@@ -26,7 +26,7 @@ addEventListener('load', function(event) {
 	}, false);
 
 	// test comm
-	comm = new voyc.Comm('http://guru.hagstrand.com/svc/');
+	comm = new voyc.Comm('http://guru.voyc.com/svc/');
 	voyc.$('echotest').addEventListener('click', function(evt) {
 		var a = {
 			data: voyc.$("xinput").value,
@@ -60,7 +60,7 @@ addEventListener('load', function(event) {
 		console.log('received testnotification ' + note.payload['x']);
 	});
 	voyc.$('testobserver').addEventListener('click', function(event) {
-		observer.publish(new voyc.Note('testnotification', 'publisher', {x:'homer', y:'jethro'}));
+		observer.publish('testnotification', 'publisher', {x:'homer', y:'jethro'});
 	}, false);
 
 	// test sketch
@@ -89,10 +89,10 @@ addEventListener('load', function(event) {
 	var s = voyc.dumpObject({a:1,b:2,c:[4,5,6],x:'xyz'});
 	var t = voyc.prepString("We're so $1 to hear about your recent $2.", ['thrilled', 'misfortune'], null);
 	voyc.removeWhiteSpace(voyc.$('commtest'));
-	voyc.loadCss('http://minimal.hagstrand.com/theme/mahagony.css');
-	voyc.unloadCss('http://minimal.hagstrand.com/theme/mahagony.css');
-	voyc.isCssLoaded('http://minimal.hagstrand.com/theme/mahagony.css');
-	voyc.toggleCss('http://minimal.hagstrand.com/theme/mahagony.css');
+	voyc.loadCss('http://minimal.voyc.com/theme/mahagony.css');
+	voyc.unloadCss('http://minimal.voyc.com/theme/mahagony.css');
+	voyc.isCssLoaded('http://minimal.voyc.com/theme/mahagony.css');
+	voyc.toggleCss('http://minimal.voyc.com/theme/mahagony.css');
 	voyc.toggleAttribute(voyc.$('redsquare'), 'xyz', 'offen');
 	
 	console.log('onload complete');
