@@ -4,6 +4,9 @@
 	Passes Note objects from publishers to subscribers.
 */
 voyc.Observer = function() {
+	if (voyc.Observer._instance) return voyc.Observer._instance;
+	voyc.Observer._instance = this;
+
 	this.stack = [];
 }
 
@@ -20,7 +23,9 @@ voyc.Observer.prototype = {
 		this.stack[notename].push( {subscriber:subscriber, callback:callback});
 	},
 
-	publish: function(note) {
+	publish: function(notename, publisher, payload) {
+		var note = new voyc.Note(notename, publisher, payload);
+
 		// if no one has subscribed to this notename, exit now
 		if (!this.stack[note.name]) {
 		   	console.log('note '+note.name+' published by '+note.publisher+' but unsubscribed');
@@ -37,9 +42,35 @@ voyc.Observer.prototype = {
 		setTimeout(function() {
 			for (var i in callbackarray) {
 				cb = callbackarray[i];
-				console.log('note '+note.name+' published to handler '+cb.subscriber);
+				console.log('note '+note.name+' published to subscriber '+cb.subscriber);
 				cb.callback.apply(self, passing);
 			}
 		}, 0);
+	}
+}
+
+/**
+	class Note, as in Notification.
+	@constructor
+	A Note is passed from publisher to subscribers 
+	by the Observer.
+*/
+voyc.Note = function(name, publisher, payload) {
+	this.name = name,
+	this.publisher = publisher,
+	this.payload = payload,
+	this.start = Date.now(),
+	this.end = 0;
+	this.elapsed = 0;
+}
+
+voyc.Note.prototype = {
+	finish: function() {
+		this.end = Date.now();
+		this.elapsed = this.end - this.start;
+	},
+	toString: function() {
+		var s = name
+		return s;
 	}
 }

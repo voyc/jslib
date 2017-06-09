@@ -8,26 +8,21 @@
 
 			function onLoad() {
 				console.log("loading");
+				g.observer = new voyc.Observer();
+				g.observer.subscribe( "onClickOne", 'tester', onClickOne);
+				g.observer.subscribe( "onClickTwo", 'tester', onClickTwo);
+				g.observer.subscribe( "onClickThree", 'tester', onClickThree);
 
-				// Create three Observers, for testing only.  Normally each app uses only one Observer.
-				g.observer1 = new voyc.Observer();
-				g.observer2 = new voyc.Observer();
-				g.observer3 = new voyc.Observer();
-
-				g.observer1.subscribe( "onClickOne", 'tester', onClickOne);
-				g.observer2.subscribe( "onClickTwo", 'tester', onClickTwo);
-				g.observer3.subscribe( "onClickThree", 'tester', onClickThree);
-
-				g.myobject = new MyObject(g.observer1);  // second subscribe to btn 1
+				g.myobject = new MyObject(g.observer);  // second subscribe to btn 1
 
 				document.getElementById('btn1').addEventListener('click', function(evt) {
-					g.observer1.publish(new voyc.Note("onClickOne", "self", {x:'homer', y:'jethro'}));
+					g.observer.publish("onClickOne", "self", {x:'homer', y:'jethro'});
 				}, false);
 				document.getElementById('btn2').addEventListener('click', function(evt) {
-					g.observer2.publish(new voyc.Note("onClickTwo", "self", {data:'xxxx'}));
+					g.observer.publish("onClickTwo", "self", {data:'xxxx'});
 				}, false);
 				document.getElementById('btn3').addEventListener('click', function(evt) {
-					g.observer3.publish(new voyc.Note("onClickThree", "self", {a:1,b:2}));
+					g.observer.publish("onClickThree", "self", {a:1,b:2});
 				}, false);
 			}
 
@@ -42,9 +37,9 @@
 			}
 
 			/* class MyObject */
-			function MyObject(observer) {
+			function MyObject() {
 				var self = this;
-				observer.subscribe( "onClickOne", 'MyObject', self.click1);
+				(new voyc.Observer).subscribe( "onClickOne", 'MyObject', self.click1);
 			}
 			MyObject.prototype = {
 				click1 : function(note) {
@@ -53,13 +48,12 @@
 			}
 		</script>
 		<script src="observer.js"></script>
-		<script src="note.js"></script>
 	</head>
 
-<body>
-	<h1>observer Test</h1>
-	<input type="button" value="Button 1" id='btn1'/>
-	<input type="button" value="Button 2" id='btn2'/>
-	<input type="button" value="Button 3" id='btn3'/>
-</body>
+	<body>
+		<h1>observer Test</h1>
+		<input type="button" value="Button 1" id='btn1'/>
+		<input type="button" value="Button 2" id='btn2'/>
+		<input type="button" value="Button 3" id='btn3'/>
+	</body>
 </html>
