@@ -19,7 +19,6 @@ arr = [
 	('code_url', url + 'sketch.js'),
 	('code_url', url + 'spinner.js'),
 	('code_url', url + 'utils.js'),
-	('code_url', url + 'voyclogo.js'),
 	('compilation_level', 'ADVANCED_OPTIMIZATIONS'),
 	('language', 'ECMASCRIPT5'),
 	('output_format', 'text'),
