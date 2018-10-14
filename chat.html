@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+	<head>
+		<meta http-equiv=Content-Type content='text/html; charset=UTF-8'>
+		<meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1'>
+		<title>Chat</title>
+		<style>[hidden] {display:none ! important;}</style>
+		<script>
+			// called by windows on back button
+			/** constant */ voyc = {};
+			window.addEventListener('load', function() {
+				voyc.chat = new voyc.Chat();
+				voyc.chat.setup(document.getElementById('chat'));
+				voyc.chat.addUser('Samantha', true, false);
+				voyc.chat.addUser('John', false, true);
+				voyc.chat.post(1, 'Good morning, John.');
+				voyc.chat.post(2, 'Hi Teacher.');
+				voyc.chat.post(1, 'Are you ready to begin?', ['yes', 'no']);
+			});
+		</script>
+		<link  href='../minimal/normaleyes.css' rel='stylesheet' type='text/css'></link>
+		<link  href='../minimal/minimal.css' rel='stylesheet' type='text/css'></link>
+		<script src='../minimal/minimal.js'></script>
+		<script src='../jslib/dragger.js'></script>
+		<link  href='chat.css' rel='stylesheet' type='text/css'></link>
+		<script src='chat.js'></script>
+	</head>
+	<body>
+		<p>Model</p>
+		<div id='model' class='chat'>
+			<div class='chatline clearfix'><div class='chatuser fleft'>Janthip:</div><div id='m1' class='chatmsg fleft'>Please give feedback.</div><div class='chattime fleft'>4:53</div></div>
+			<div class='chatline clearfix'><div class='chatuser fright'></div><div id='m2' class='chatmsg fright'>Already done.</div><div class='chattime fright'>4:57</div></div>
+			<div class='chatdate'>Sunday, 3 Jun 2019</div>
+			<div class='chatline clearfix'><div class='chatuser fleft'>Janthip:</div><div id='m3' class='chatmsg fleft'>An intelligence builds models and uses them to make predictions and prescriptions for behavior in the world.</div><div class='chattime fleft'>5:02</div></div>
+		</div>
+		<p>Test</p>
+		<div id='chat'></div>
+		<div id='mchoices'>yes no</div>
+		<table id='chatentry' class='chatentry'>
+			<td><textarea id='guestpost'></textarea></td>
+			<td><button id='guestpostbtn'>></button></td>
+		</table>
+	</body>
+</html>
