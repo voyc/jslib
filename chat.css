@@ -1,7 +1,22 @@
-.chat {
+#chatcontainer {
+	padding:0;
+	margin:0;
+}
+#chatscroller {
 	background-color:#88f;
 	max-width:60rem;
+	xheight:580px;
+	width:100%;
+	position:fixed;
+	overflow-y:auto;
+}
+#chatcontent {
 	padding:.5rem;
+}
+#chatfoot {
+	position:fixed;
+	bottom:0px;
+	left:0px;
 }
 
 .chatline {

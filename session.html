@@ -7,12 +7,11 @@
 			console.log('domain: ' + document.domain);
 			console.log('root domain: ' + voyc.Session.getRootDomain());
 
-			var j = voyc.Session.get('juniper');
-			var j = voyc.Session.get('juniper');
-			console.log('session: ' + j);
+			var j = voyc.Session.get('juniper');  // first time is null
+			console.log('get juniper: ' + j);
 
-			voyc.Session.set('juniper', document.domain);
-			console.log('session set');
+			voyc.Session.set('juniper', 'bloody hell');
+			console.log('set juniper');
 			}, false);
 	</script>
 	<script src="cookie.js"></script>

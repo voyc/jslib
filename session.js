@@ -17,34 +17,34 @@ voyc.Method = {
 }
 
 voyc.Session.settings = {
-	method: voyc.Method.COOKIE
+	method: voyc.Method.SESSIONSTORAGE
 }
 
 voyc.Session.set = function(name, value) {
-	if (voyc.Session.settings.method = voyc.Method.COOKIE) {
+	if (voyc.Session.settings.method == voyc.Method.COOKIE) {
 		voyc.Cookie.set(name, value, null, '', voyc.Session.getRootDomain(), '');
 	}
-	else if (voyc.Session.settings.method = voyc.Method.SESSIONSTORAGE){
+	else if (voyc.Session.settings.method == voyc.Method.SESSIONSTORAGE){
 		sessionStorage.setItem(name, value);
 	}
 }
 
 voyc.Session.get = function(name) {
 	var value = '';
-	if (voyc.Session.settings.method = voyc.Method.COOKIE) {
+	if (voyc.Session.settings.method == voyc.Method.COOKIE) {
 		value = voyc.Cookie.get(name);
 	}
-	else if (voyc.Session.settings.method = voyc.Method.SESSIONSTORAGE){
+	else if (voyc.Session.settings.method == voyc.Method.SESSIONSTORAGE){
 		value = sessionStorage.getItem(name);
 	}
 	return value;
 }
 
 voyc.Session.delete = function(name) {
-	if (voyc.Session.settings.method = voyc.Method.COOKIE) {
+	if (voyc.Session.settings.method == voyc.Method.COOKIE) {
 		voyc.Cookie.delete(name);
 	}
-	else if (voyc.Session.settings.method = voyc.Method.SESSIONSTORAGE){
+	else if (voyc.Session.settings.method == voyc.Method.SESSIONSTORAGE){
 		sessionStorage.removeItem(name);
 	}
 }

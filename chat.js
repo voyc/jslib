@@ -3,29 +3,56 @@
 	@constructor
 **/
 voyc.Chat = function() {
-	this.eChat = {};
+	this.chatcontainer = {};
+	this.chatscroller = {};
+	this.chatcontent = {};
 	this.eEntry = {};
 	this.users = [];
+	this.hostid = 0;
 }
 
-voyc.Chat.posttemplate = "<div class='chatline clearfix'><div class='chatuser f%side%'>%user%:</div><div class='chatmsg f%side%'>%message%</div><div class='chattime f%side%'>%time%</div></div>";
+voyc.Chat.containertemplate = `
+	<div id='chatscroller'>
+		<div id='chatcontent'></div>
+	</div>
+	<div id='chatfoot'>
+		<div id='mchoices'>yes no</div>
+		<table id='chatentry' class='chatentry'>
+			<td><textarea id='guestpost'></textarea></td>
+			<td><button id='guestpostbtn'>></button></td>
+		</table>
+	</div>
+`;
+
+voyc.Chat.posttemplate = "<div class='chatline clearfix'><div class='chatuser f%side%'>%user%</div><div class='chatmsg f%side%'>%message%</div><div class='chattime f%side%'>%time%</div></div>";
 voyc.Chat.entrytemplate = "";
 
 voyc.Chat.prototype.setup = function(container) {
-	this.eChat = document.createElement('div');
-	this.eChat.classList.add('chat');
-	container.appendChild(this.eChat);
-
-	this.eEntry = document.createElement('div');
-	this.eEntry.classList.add('chatentry');
-	container.appendChild(this.eEntry);
+	this.chatcontainer = container;
+	this.chatcontainer.innerHTML = voyc.Chat.containertemplate;
+	this.chatscroller = document.getElementById('chatscroller');
+	this.chatcontent = document.getElementById('chatcontent');
 	
 	document.getElementById('guestpostbtn').addEventListener('click', function(e) {
 		var s = document.getElementById('guestpost').value;
-		voyc.chat.post(2, s); 
-		voyc.chat.post(1, 'ok'); 
+		voyc.chat.post(voyc.idguest, s); 
 		document.getElementById('guestpost').value = '';
 	}, false);
+	document.getElementById('guestpost').addEventListener('keydown', function(e) {
+		if (e.keyCode == 13) {
+			document.getElementById('guestpostbtn').click();
+			e.preventDefault();
+		}
+	}, false);
+	var self = this;
+	window.addEventListener('resize', function() {self.resize()});
+	this.resize();
+}
+
+voyc.Chat.prototype.resize = function() {
+	var cliH = window.innerHeight;
+	var footH = document.getElementById('chatfoot').offsetHeight;
+	document.getElementById('chatscroller').style.height = (cliH - footH) + 'px';
 }
 
 voyc.Chat.prototype.addUser = function(name, host, me) {
@@ -49,7 +76,7 @@ voyc.Chat.prototype.addUser = function(name, host, me) {
 voyc.Chat.prototype.post = function(id, message, mchoice) {
 	var user = this.users[id - 1];
 	var side = (user.me == true) ? 'right' : 'left';
-	var name = (user.me == true) ? '' : user.name;
+	var name = (user.me == true) ? '' : user.name + ':';
 
 	var dtime = new Date();
 	var hh = dtime.getHours();
@@ -67,7 +94,10 @@ voyc.Chat.prototype.post = function(id, message, mchoice) {
 
 	var m = document.createElement('div');
 	m.innerHTML = s;
-	this.eChat.appendChild(m);
+	this.chatcontent.appendChild(m);
+	
+	this.chatscroller.scrollTop = this.chatscroller.scrollHeight;
+	document.getElementById('guestpost').focus();
 
 	// add multiple choice options
 	var soptions = '';
@@ -80,10 +110,12 @@ voyc.Chat.prototype.post = function(id, message, mchoice) {
 			document.getElementById('mchoices').appendChild(opt);
 			opt.addEventListener('click', function(e) {
 				var s = e.target.innerHTML;
-				voyc.chat.post(2,s);
+				voyc.chat.post(voyc.idguest,s);
 			}, false);
 		}
 	}
+
+	voyc.observer.publish('ChatPost','chat',{userid:id,msg:message,choice:mchoice});
 }
 
 voyc.Chat.prototype.init = function(conversation) {
