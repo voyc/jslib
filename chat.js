@@ -115,7 +115,7 @@ voyc.Chat.prototype.post = function(id, message, mchoice) {
 		}
 	}
 
-	voyc.observer.publish('ChatPost','chat',{userid:id,msg:message,choice:mchoice});
+	(new voyc.Observer).publish('ChatPost','chat',{userid:id,msg:message,choice:mchoice});
 }
 
 voyc.Chat.prototype.init = function(conversation) {
