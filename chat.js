@@ -108,6 +108,7 @@ voyc.Chat.prototype.post = function(id, message, mchoice) {
 	document.getElementById('guestpost').focus();
 
 	// add multiple choice options
+	var self = this;
 	var soptions = '';
 	document.getElementById('mchoices').innerHTML = '';
 	if (mchoice) {
@@ -118,12 +119,12 @@ voyc.Chat.prototype.post = function(id, message, mchoice) {
 			document.getElementById('mchoices').appendChild(opt);
 			opt.addEventListener('click', function(e) {
 				var s = e.target.innerHTML;
-				self.chat.post(self.idguest,s);
+				self.post(self.idguest,s);
 			}, false);
 		}
 	}
 
-	(new voyc.Observer).publish('ChatPost','chat',{userid:id,msg:message,choice:mchoice});
+	(new voyc.Observer).publish('chat-posted','chat',{userid:id,msg:message,choice:mchoice});
 }
 
 voyc.Chat.prototype.init = function(conversation) {
