@@ -7,14 +7,14 @@
 	max-width:60rem;
 	xheight:580px;
 	width:100%;
-	position:fixed;
+	xposition:fixed;
 	overflow-y:auto;
 }
 #chatcontent {
 	padding:.5rem;
 }
 #chatfoot {
-	position:fixed;
+	xposition:fixed;
 	bottom:0px;
 	left:0px;
 }

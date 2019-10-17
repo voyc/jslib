@@ -8,7 +8,8 @@ voyc.Chat = function() {
 	this.chatcontent = {};
 	this.eEntry = {};
 	this.users = [];
-	this.hostid = 0;
+	this.idhost = 1;
+	this.idguest = 2;
 }
 
 voyc.Chat.containertemplate = `
@@ -16,11 +17,11 @@ voyc.Chat.containertemplate = `
 		<div id='chatcontent'></div>
 	</div>
 	<div id='chatfoot'>
-		<div id='mchoices'>yes no</div>
-		<table id='chatentry' class='chatentry'>
-			<td><textarea id='guestpost'></textarea></td>
-			<td><button id='guestpostbtn'>></button></td>
-		</table>
+                <table id='chatentry' class='chatentry'>
+                        <td><textarea id='guestpost'></textarea></td>
+                        <td><div id='mchoices'>yes no</div></td>
+                        <td><button id='guestpostbtn'>></button></td>
+                </table>
 	</div>
 `;
 
@@ -33,9 +34,10 @@ voyc.Chat.prototype.setup = function(container) {
 	this.chatscroller = document.getElementById('chatscroller');
 	this.chatcontent = document.getElementById('chatcontent');
 	
+	var self = this;
 	document.getElementById('guestpostbtn').addEventListener('click', function(e) {
 		var s = document.getElementById('guestpost').value;
-		voyc.chat.post(voyc.idguest, s); 
+		self.post(self.idguest, s); 
 		document.getElementById('guestpost').value = '';
 	}, false);
 	document.getElementById('guestpost').addEventListener('keydown', function(e) {
@@ -50,6 +52,12 @@ voyc.Chat.prototype.setup = function(container) {
 }
 
 voyc.Chat.prototype.resize = function() {
+	voyc.$('chatcontainer').style.height = document.querySelector('footer').offsetTop - voyc.$('chatscroller').offsetTop + 'px';
+	
+	voyc.$('chatscroller').style.height = voyc.$('chatcontainer').offsetHeight - voyc.$('chatfoot').offsetHeight + 'px';
+	
+	
+	return;
 	var cliH = window.innerHeight;
 	var footH = document.getElementById('chatfoot').offsetHeight;
 	document.getElementById('chatscroller').style.height = (cliH - footH) + 'px';
@@ -110,7 +118,7 @@ voyc.Chat.prototype.post = function(id, message, mchoice) {
 			document.getElementById('mchoices').appendChild(opt);
 			opt.addEventListener('click', function(e) {
 				var s = e.target.innerHTML;
-				voyc.chat.post(voyc.idguest,s);
+				self.chat.post(self.idguest,s);
 			}, false);
 		}
 	}
