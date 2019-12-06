@@ -72,6 +72,10 @@ voyc.Chat.prototype.addUser = function(name, host, me) {
 	return id;
 }
 
+voyc.Chat.prototype.changeHost = function(name) {
+	this.users[this.idhost].name = name;
+}
+
 /**
 	method post()
 	If multiple humans are using this,
