@@ -27,6 +27,13 @@
 				voyc.chat.post(voyc.idhost, 'Good morning, John.');
 				voyc.chat.post(voyc.idguest, 'Hi Teacher.');
 				voyc.chat.post(voyc.idhost, 'Are you ready to begin?', ['yes', 'no']);
+
+				voyc.$('chatcontainer').style.height = window.innerHeight + 'px';
+				voyc.chat.resize(window.innerHeight);
+			});
+			window.addEventListener('resize', function() {
+				voyc.$('chatcontainer').style.height = window.innerHeight + 'px';
+				voyc.chat.resize(window.innerHeight);
 			});
 		</script>
 		<link  href='../minimal/normaleyes.css' rel='stylesheet' type='text/css'></link>

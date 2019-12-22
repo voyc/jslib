@@ -46,15 +46,10 @@ voyc.Chat.prototype.setup = function(container) {
 			e.preventDefault();
 		}
 	}, false);
-	var self = this;
-	window.addEventListener('resize', function() {self.resize()});
-	this.resize();
 }
 
-voyc.Chat.prototype.resize = function() {
-	this.chatcontainer.style.height = voyc.$('footer').offsetTop - this.chatscroller.offsetTop + 'px';
-	this.chatscroller.style.height = this.chatcontainer.offsetHeight - voyc.$('chatfoot').offsetHeight + 'px';
-	return;
+voyc.Chat.prototype.resize = function(height) {
+	this.chatscroller.style.height = height - voyc.$('chatfoot').offsetHeight + 'px';
 }
 
 voyc.Chat.prototype.addUser = function(name, host, guest) {
