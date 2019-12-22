@@ -8,8 +8,8 @@ voyc.Chat = function() {
 	this.chatcontent = {};
 	this.eEntry = {};
 	this.users = [];
-	this.idhost = 1;
-	this.idguest = 2;
+	this.idhost = 0;
+	this.idguest = 0;
 }
 
 voyc.Chat.containertemplate = `
@@ -52,24 +52,28 @@ voyc.Chat.prototype.setup = function(container) {
 }
 
 voyc.Chat.prototype.resize = function() {
-	voyc.$('chatcontainer').style.height = document.querySelector('footer').offsetTop - voyc.$('chatscroller').offsetTop + 'px';
-	
-	voyc.$('chatscroller').style.height = voyc.$('chatcontainer').offsetHeight - voyc.$('chatfoot').offsetHeight + 'px';
-	
-	
+	this.chatcontainer.style.height = voyc.$('footer').offsetTop - this.chatscroller.offsetTop + 'px';
+	this.chatscroller.style.height = this.chatcontainer.offsetHeight - voyc.$('chatfoot').offsetHeight + 'px';
 	return;
-	var cliH = window.innerHeight;
-	var footH = document.getElementById('chatfoot').offsetHeight;
-	document.getElementById('chatscroller').style.height = (cliH - footH) + 'px';
 }
 
-voyc.Chat.prototype.addUser = function(name, host, me) {
+voyc.Chat.prototype.addUser = function(name, host, guest) {
 	var ndx = this.users.length;
 	var id = ndx + 1;
 	var host = host || false;
-	var me = me || false;
-	this.users.push({id:id, name:name, host:host, me:me});
+	var guest = guest || false;
+	this.users.push({id:id, name:name, host:host, guest:guest});
+	if (host) {
+		this.idhost = id;
+	}
+	if (guest) {
+		this.idguest = id;
+	}
 	return id;
+}
+
+voyc.Chat.prototype.changeHost = function(id) {
+	this.idhost = id;
 }
 
 /**
@@ -83,8 +87,12 @@ voyc.Chat.prototype.addUser = function(name, host, me) {
 **/
 voyc.Chat.prototype.post = function(id, message, mchoice) {
 	var user = this.users[id - 1];
-	var side = (user.me == true) ? 'right' : 'left';
-	var name = (user.me == true) ? '' : user.name + ':';
+	var side = 'right';
+	var name = '';
+	if (id == this.idhost) {
+		side = 'left';
+		name = user.name + ':';
+	}
 
 	var dtime = new Date();
 	var hh = dtime.getHours();
