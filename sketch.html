@@ -81,6 +81,20 @@
 			document.getElementById('show-btn').addEventListener('click', function() {
 				document.getElementById('content').removeAttribute('hidden', '');
 			}, false);
+
+			document.getElementById('pen-btn').addEventListener('click', function() {
+				sketch3.setOptions({
+				        penColor:'fuchsia',
+				        brushSize:5
+				});
+			}, false);
+			
+			document.getElementById('brush-btn').addEventListener('click', function() {
+				sketch3.setOptions({
+				        penColor:'yellow',
+				        brushSize:12
+				});
+			}, false);
 		}
 	</script>
 	<script src='sketch.js'></script>
@@ -94,5 +108,7 @@
 	</div>
 	<input type='button' id='show-btn' value='show'/>
 	<input type='button' id='clear-btn' value='clear'/>
+	<input type='button' id='pen-btn' value='Pen'/>
+	<input type='button' id='brush-btn' value='brush'/>
 </body>
 </html>

@@ -10,6 +10,7 @@ voyc.Sketch = function (canvas, options) {
 
 	// options
 	this.penColor = getComputedStyle(this.canvas).color;
+	this.brushSize = 5;
 	this.hasGrid = false;
 	this.gridColor = 'blue';
 	this.gridSize = 12;
@@ -18,9 +19,22 @@ voyc.Sketch = function (canvas, options) {
 	}
 
 	// working variables
+	
+/*	
+	rewrite with an array of stroke objects
+	stroke = {
+		c:0,
+		w:0,
+		p:[]
+	}
+	add "back" capability to remove only the most recent stroke object
+*/	
 	this.clickX = [];
 	this.clickY = [];
 	this.clickDrag = [];
+	this.color = [];
+	this.lineWidth = [];
+
 	this.paint = false;
 
 	this.createUserEvents();
@@ -29,6 +43,7 @@ voyc.Sketch = function (canvas, options) {
 voyc.Sketch.prototype = {
 	setOptions: function(options) {
 		this.penColor = (options.penColor) ? options.penColor : this.penColor;
+		this.brushSize = (options.brushSize) ? options.brushSize : this.brushSize;
 		this.hasGrid = (options.hasGrid) ? options.hasGrid : this.hasGrid;
 		this.gridColor = (options.gridColor) ? options.gridColor : this.gridColor;
 		this.gridSize = (options.gridSize) ? options.gridSize : this.gridSize;
@@ -38,6 +53,8 @@ voyc.Sketch.prototype = {
 		this.clickX = [];
 		this.clickY = [];
 		this.clickDrag = [];
+		this.color = [];
+		this.lineWidth = [];
 		this.draw();
 	},
 
@@ -64,13 +81,10 @@ voyc.Sketch.prototype = {
 			this.drawGrid(ctx, this.canvas.width, this.canvas.height, this.gridSize);
 		}
 		
-		ctx.strokeStyle = this.penColor;
 		ctx.lineCap = "round";
 		ctx.lineJoin = "round";
-		ctx.lineWidth = radius;
 
 		// For each point drawn
-		ctx.beginPath();
 		for (i = 0; i < this.clickX.length; i += 1) {
 			// If dragging then draw a line between the two points
 			if (this.clickDrag[i] && i) {
@@ -80,8 +94,15 @@ voyc.Sketch.prototype = {
 				ctx.moveTo(this.clickX[i] - 1, this.clickY[i]);
 			}
 			ctx.lineTo(this.clickX[i], this.clickY[i]);
-			
+			if (this.color[i] != this.color[i -1]) {
+				ctx.strokeStyle = this.color[i-1];
+				ctx.lineWidth = this.lineWidth[i-1];
+				ctx.stroke();
+				ctx.beginPath();
+			}
 		}
+		ctx.strokeStyle = this.color[i-1];
+		ctx.lineWidth = this.lineWidth[i-1];
 		ctx.stroke();
 	},
 
@@ -90,6 +111,8 @@ voyc.Sketch.prototype = {
 		this.clickX.push(x);
 		this.clickY.push(y);
 		this.clickDrag.push(dragging);
+		this.color.push(this.penColor);
+		this.lineWidth.push(this.brushSize);
 	},
 
 	// mouse and touch event handlers

@@ -90,6 +90,20 @@ voyc.clone = function(obj) {
 	return newObj;
 }
 
+voyc.merge = function(obj1, obj2) {
+	for (var i in obj2) {
+		if (typeof obj2[i] == "object") {
+			obj1[i] = voyc.clone(obj2[i]);
+		}
+		else if (voyc.isArray(obj2[i])) {
+			obj1[i] = voyc.cloneArray(obj2[i]);
+		}
+		else {
+			obj1[i] = obj2[i];
+		}
+	}
+}
+
 // return a multi-line string display of an object's members
 voyc.dumpObject = function(obj) {
 	incIndent = function() {
@@ -205,12 +219,6 @@ voyc.findParentWithTag = function(elem, tag) {
 	return parent;
 }
 
-/**
-	@param {Element} elem
-	@param {string} attr
-	@param {string} value
-	@param {boolean} [boo]
-*/
 voyc.toggleAttribute = function(elem, attr, value, boo) {
 	var boo = (typeof(boo) == 'undefined') ? elem.hasAttribute(attr) : boo;
 	if (boo) {
