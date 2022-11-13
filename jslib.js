@@ -89,10 +89,10 @@ addEventListener('load', function(event) {
 	var s = voyc.dumpObject({a:1,b:2,c:[4,5,6],x:'xyz'});
 	var t = voyc.prepString("We're so $1 to hear about your recent $2.", ['thrilled', 'misfortune'], null);
 	voyc.removeWhiteSpace(voyc.$('commtest'));
-	voyc.loadCss('http://minimal.voyc.com/theme/mahagony.css');
-	voyc.unloadCss('http://minimal.voyc.com/theme/mahagony.css');
-	voyc.isCssLoaded('http://minimal.voyc.com/theme/mahagony.css');
-	voyc.toggleCss('http://minimal.voyc.com/theme/mahagony.css');
+	voyc.loadCss('https://minimal.voyc.com/theme/mahagony.css');
+	voyc.unloadCss('https://minimal.voyc.com/theme/mahagony.css');
+	voyc.isCssLoaded('https://minimal.voyc.com/theme/mahagony.css');
+	voyc.toggleCss('https://minimal.voyc.com/theme/mahagony.css');
 	voyc.toggleAttribute(voyc.$('redsquare'), 'xyz', 'offen');
 	
 	console.log('onload complete');
