@@ -5,8 +5,10 @@
 	@param {Element|null} canvas - A canvas element in the html.
 	@param {Object} [options=null] - An object of option values.
 */
-voyc.Sketch = function (canvas, options) {
+voyc.Sketch = function (canvas, options, touchpad) {
 	this.canvas = canvas;
+	this.touchpad = touchpad || canvas;
+	this.buttons = [0,1,2]  // left, middle, right
 
 	// options
 	this.penColor = getComputedStyle(this.canvas).color;
@@ -37,7 +39,7 @@ voyc.Sketch = function (canvas, options) {
 
 	this.paint = false;
 
-	this.createUserEvents();
+	this.attach(this.touchpad);
 }
 
 voyc.Sketch.prototype = {
@@ -117,6 +119,9 @@ voyc.Sketch.prototype = {
 
 	// mouse and touch event handlers
 	press: function (e) {
+		if (!this.buttons.includes( e.button))
+			return
+
 		// Mouse down location
 		var sizeHotspotStartX,
 			mouseX = e.pageX - e.target.offsetLeft,
@@ -155,19 +160,20 @@ voyc.Sketch.prototype = {
 		this.paint = false;
 	},
 
-	createUserEvents: function () {
-		// Add mouse event listeners to canvas element
+	attach: function (elem) {
+		// Add mouse event listeners
 		var self = this;
-		this.canvas.addEventListener('mousedown', function(e) {self.press(e)}, false);
-		this.canvas.addEventListener('mousemove', function(e) {self.drag(e)}, false);
-		this.canvas.addEventListener('mouseup',   function(e) {self.release(e)}, false);
-		this.canvas.addEventListener('mouseout',  function(e) {self.cancel(e)}, false);
+		elem.addEventListener('mousedown', function(e) {self.press(e)}, false);
+		elem.addEventListener('mousemove', function(e) {self.drag(e)}, false);
+		elem.addEventListener('mouseup',   function(e) {self.release(e)}, false);
+		elem.addEventListener('mouseout',  function(e) {self.cancel(e)}, false);
 
-		// Add touch event listeners to canvas element
-		this.canvas.addEventListener('touchstart',  function(e) {self.press(e)}, false);
-		this.canvas.addEventListener('touchmove',   function(e) {self.drag(e)}, false);
-		this.canvas.addEventListener('touchend',    function(e) {self.release(e)}, false);
-		this.canvas.addEventListener('touchcancel', function(e) {self.cancel(e)}, false);
+		// Add touch event listeners
+		elem.addEventListener('touchstart',  function(e) {self.press(e)}, false);
+		elem.addEventListener('touchmove',   function(e) {self.drag(e)}, false);
+		elem.addEventListener('touchend',    function(e) {self.release(e)}, false);
+		elem.addEventListener('touchcancel', function(e) {self.cancel(e)}, false);
+
 	},
 
 	drawGrid: function(ctx, w, h, g) {
