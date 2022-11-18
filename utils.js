@@ -271,3 +271,15 @@ voyc.toggleCss = function(filename) {
 		voyc.loadCss(filename);
 	}
 }
+
+/**
+	Math utilities
+**/
+voyc.clamp = function(x,min,max) {
+	return Math.round(Math.min(max, Math.max(min, x)));
+}
+
+voyc.interpolate = function(x, imin, imax, omin, omax) {
+	//(r-omin)/(omax-omin) = (x-imin)/(imax-imin)
+	return (((x-imin)/(imax-imin)) * (omax-omin)) + omin
+}
