@@ -275,6 +275,12 @@ voyc.toggleCss = function(filename) {
 /**
 	Math utilities
 **/
+voyc.round = function(x,precis) {
+	// see https://dustinpfister.github.io/2020/06/15/js-math-round/
+	var f = (10**precis)
+	return Math.round(x*f)/f
+}
+
 voyc.clamp = function(x,min,max) {
 	return Math.round(Math.min(max, Math.max(min, x)));
 }
