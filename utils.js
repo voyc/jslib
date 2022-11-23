@@ -104,52 +104,10 @@ voyc.merge = function(obj1, obj2) {
 	}
 }
 
-// return a multi-line string display of an object's members
-voyc.dumpObject = function(obj) {
-	incIndent = function() {
-		numIndent++;
-		indentstr = composeIndentStr(numIndent);
-	}
-	decIndent = function() {
-		numIndent--;
-		indentstr = composeIndentStr(numIndent);
-	}
-	composeIndentStr = function(num) {
-		var s = '';
-		for (var i=0; i<num; i++) {
-			s += "&nbsp;&nbsp;&nbsp;"
-		}
-		return s;
-	}
-	dumpObjectR = function(obj) {
-		var t;
-		for (var x in obj) {
-			t = obj[x];
-			if (typeof(t) == "string") {
-				t = '&apos;' + t + '&apos;';
-			}
-			if (typeof(t) == "object") {
-				str += indentstr+x+"= {<br/>";
-				incIndent();
-				dumpObjectR(t);
-				decIndent();
-				str += indentstr+"}<br/>";
-			}
-			else {
-				str += indentstr+x+"="+t+"<br/>";
-			}
-		}
-	}
-	var numIndent = 0;
-	var indentstr = '';
-	var str = '';
-	dumpObjectR(obj);
-	return str;
-}
-
 /**
 	DOM utilities
 **/
+
 voyc.getAbsolutePosition = function(e) {
 	var x = 0;
 	var y = 0;
