@@ -108,3 +108,26 @@ debugEventBubbling = function(event, parent, level) {
 	var subtree = voyc.$(parent)  // top of this subtree hierarchy
 	recurseChildren(subtree)
 }
+
+// a console.log-like system
+voyc.logger = function(msg) {
+	var e = document.getElementById('logger')
+	if (!e) {
+		e = document.createElement('div')
+		e.id = 'logger'
+		e.style.position = 'fixed'
+		e.style.width = '50%'
+		e.style.height = '50%'
+		e.style.right = '10px'
+		e.style.top = '50px'
+		e.style.border = '1px'
+		e.style.padding = '1em'
+		e.style.backgroundColor = 'white'
+		e.style.border = '1px solid black'
+		e.style.boxShadow = '4px 4px 2px 0px rgba(0,0,0,.5)'
+		e.style.overflow = 'scroll'
+		document.body.appendChild(e)
+	}
+	e.innerHTML += msg + '<br/>'
+	e.scrollTop = e.scrollHeight;
+}
