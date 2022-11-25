@@ -1,6 +1,6 @@
 // return a multi-line string display of an object's members
 // uses recursion to display hierarchy of embedded objects
-voyc.dumpObject = function(obj) {
+voyc.dumpObject = function(obj,level) {
 	incIndent = function() {
 		numIndent++;
 		indentstr = composeIndentStr(numIndent);
@@ -23,7 +23,7 @@ voyc.dumpObject = function(obj) {
 			if (typeof(t) == "string") {
 				t = '&apos;' + t + '&apos;';
 			}
-			if (typeof(t) == "object") {
+			if (typeof(t) == "object" && numIndent<level) {
 				str += indentstr+x+"= {<br/>";
 				incIndent();
 				dumpObjectR(t);
@@ -42,12 +42,34 @@ voyc.dumpObject = function(obj) {
 	return str;
 }
 
+// return a multi-line string display of an HTML element's members
+voyc.dumpElement = function(e) {
+	var str = 'event type ' + e.type + '<br/>';
+	var a = []
+	for (var x in e)
+		a.push(x)
+	a.sort()
+	var x,t;
+	var goodtypes = ['boolean', 'number', 'string']
+	var badtypes = ['function', 'object']
+	for (var i in a) {
+		x = a[i]
+		t = e[x];
+		if (x == x.toUpperCase())
+			continue
+		if (badtypes.includes(typeof(t)))
+			t = typeof(t)
+		str += x+": "+t+"<br/>";
+	}
+	return str;
+}
+
 // examine the bubbling of events through the hierarchy of overlaid elements 
 // parental hierarchy - child of child of child, last child is on the bottom 
-// display order - is top down, last child is displayed last, "on top"
+// display order - last child is displayed last, "on top"
 // bubbling up - up the parental hierarchy 
 // target = bottom of the hierarchy, on top of the display, first to feel the touch
-// currentTarget = current parent as the event bubbles up the hierarchy
+// currentTarget = current element as the event bubbles up the hierarchy
 debugEventBubbling = function(event, parent, level) {
 	composeIndentStr = function(num) {
 		var s = ''
@@ -109,7 +131,7 @@ debugEventBubbling = function(event, parent, level) {
 	recurseChildren(subtree)
 }
 
-// a console.log-like system
+// a console.log replacement for android debugging
 voyc.logger = function(msg) {
 	var e = document.getElementById('logger')
 	if (!e) {
