@@ -50,27 +50,36 @@ voyc.printArray = function(a,br,max) {
 }
 
 voyc.shuffleArray = function(array) {
-  var currentIndex = array.length, temporaryValue, randomIndex;
+	var currentIndex = array.length, temporaryValue, randomIndex;
 
-  // While there remain elements to shuffle...
-  while (0 !== currentIndex) {
+	// While there remain elements to shuffle...
+	while (0 !== currentIndex) {
 
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
+		// Pick a remaining element...
+		randomIndex = Math.floor(Math.random() * currentIndex);
+		currentIndex -= 1;
 
-    // And swap it with the current element.
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
+		// And swap it with the current element.
+		temporaryValue = array[currentIndex];
+		array[currentIndex] = array[randomIndex];
+		array[randomIndex] = temporaryValue;
+	}
 
-  return array;
+	return array;
+}
+
+voyc.subtractArray = function(arrayplus, arrayminus) {
+	array = []
+	var n = arrayplus.length
+	for (var i=0; i<n; i++)
+		array[i] = arrayplus[i] - arrayminus[i]
+	return array
 }
 
 /**
 	object utilities
 **/
+
 voyc.clone = function(obj) {
 	if (voyc.isArray(obj)) {
 		return voyc.cloneArray(obj);
