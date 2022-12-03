@@ -141,7 +141,7 @@ voyc.center = function(elem, container) {
 	g.style.margin = 'auto auto';
 	var gHt = g.offsetHeight;
 	var gWid = g.offsetWidth;
-	
+
 	var f = container;
 	var fHt = f.offsetHeight;
 	var fWid = f.offsetWidth;
@@ -152,7 +152,7 @@ voyc.center = function(elem, container) {
 		var left = Math.floor(w / 2);
 		var pct = Math.floor((left/fWid) * 100);
 		g.style.margin = 'auto ' + pct + '%';
-	}		
+	}
 
 	// center vertically
 	var h = fHt - gHt;
@@ -194,6 +194,13 @@ voyc.toggleAttribute = function(elem, attr, value, boo) {
 	else {
 		elem.removeAttribute(attr);
 	}
+}
+
+voyc.show = function(elem, boo) {
+	if (boo)
+		elem.classList.remove('hidden')
+	else
+		elem.classList.add('hidden')
 }
 
 /**
