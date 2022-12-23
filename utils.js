@@ -76,6 +76,15 @@ voyc.subtractArray = function(arrayplus, arrayminus) {
 	return array
 }
 
+voyc.compareArray = function(a, b) {
+	var boo = (a.length == b.length)
+	if (boo)
+		for (var i=0; i<a.length; i++)
+			if (a[i] != b[i])
+				boo = false
+	return boo
+}
+
 /**
 	object utilities
 **/
