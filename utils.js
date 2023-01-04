@@ -25,9 +25,11 @@ voyc.prepString = function(s, a, o) {
 	return target;
 }
 
-/**
-	array utilities
-**/
+voyc.isMobile = function() {
+	return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+}
+
+// -------- array utilities
 
 voyc.isArray = function(a) {
 	return (Object.prototype.toString.call(a) === '[object Array]');
@@ -85,9 +87,7 @@ voyc.compareArray = function(a, b) {
 	return boo
 }
 
-/**
-	object utilities
-**/
+// -------- object utilities
 
 voyc.clone = function(obj) {
 	if (voyc.isArray(obj)) {
@@ -122,9 +122,7 @@ voyc.merge = function(obj1, obj2) {
 	}
 }
 
-/**
-	DOM utilities
-**/
+// -------- DOM utilities
 
 voyc.getAbsolutePosition = function(e) {
 	var x = 0;
@@ -212,9 +210,8 @@ voyc.show = function(elem, boo) {
 		elem.classList.add('hidden')
 }
 
-/**
-	CSS utilities
-**/
+// -------- CSS utilities
+
 voyc.loadCss = function(filename) {
 	var css = document.createElement('link');
 	css.setAttribute('rel', 'stylesheet');
@@ -255,9 +252,9 @@ voyc.toggleCss = function(filename) {
 	}
 }
 
-/**
-	Math utilities
-**/
+
+// -------- Math utilities
+
 voyc.round = function(x,precis) {
 	// see https://dustinpfister.github.io/2020/06/15/js-math-round/
 	var f = (10**precis)
