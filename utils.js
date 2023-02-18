@@ -262,7 +262,7 @@ voyc.round = function(x,precis) {
 }
 
 voyc.clamp = function(x,min,max) {
-	return Math.round(Math.min(max, Math.max(min, x)));
+	return Math.min(max, Math.max(min, x))
 }
 
 voyc.interpolate = function(x, imin, imax, omin, omax) {
